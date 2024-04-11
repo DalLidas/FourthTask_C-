@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourthTask", "FourthTask\FourthTask.csproj", "{58CE50CA-99EF-4043-A93A-087FFD279F1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBTest", "DBTest\DBTest\DBTest.csproj", "{D03EFE65-404B-430D-8650-B67FB43808BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBTest", "DBTest\DBTest\DBTest.csproj", "{D03EFE65-404B-430D-8650-B67FB43808BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFTest", "WPFTest\WPFTest.csproj", "{7CEEDC62-5F0C-4BF7-B165-B5B1B56E49CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFTest", "WPFTest\WPFTest.csproj", "{7CEEDC62-5F0C-4BF7-B165-B5B1B56E49CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
