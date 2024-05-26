@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FourthTask"
         mc:Ignorable="d"
         Title="{Binding Title}" 
-        Height="600" Width="1200"
+        Height="600" Width="1200" MinHeight="550" MinWidth="550"
         FontFamily="Bahnschrift" FontSize="18" 
         Icon="/Static/Images/train-menu-icon.png">
 
@@ -15,33 +15,16 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}"/>
-            </MenuItem>
+    <Grid Height="auto" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">       
+        <Frame
+            Grid.RowSpan="2"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch" 
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"  
+            Name="_mainFrame" 
+            NavigationUIVisibility="Hidden"/>
 
-            <MenuItem Header="Помощь">
-                
-            </MenuItem>
-        </Menu>
+    </Grid>
 
-        <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock Text="{Binding Status}"/>
-            </StatusBarItem>
-            
-            <StatusBarItem>
-                <ProgressBar Width="120" Height="15" Value="30"/>
-            </StatusBarItem>
-        </StatusBar>
-
-        <TabControl>
-            <TabItem Header="Вкладка 1">
-                <Rectangle Fill="Aqua" Margin="222,33,586,0" Height="214" RadiusX="25.738" RadiusY="25.738" RenderTransformOrigin="-3.029,-2.539"/>
-            </TabItem>
-            <TabItem Header="Вкладка 2"></TabItem>
-            <TabItem Header="Вкладка 3"></TabItem>
-        </TabControl>
-    </DockPanel>
 </Window>
