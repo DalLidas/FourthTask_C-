@@ -27,7 +27,7 @@ namespace FourthTask.ViewModels
         private bool CanRegistrationCommandExecute(object parameter) => true;
         private void OnRegistrationCommandExecute(object parameter)
         {
-            Ioc.NavigationService.NavigateToAuthorizationPage();
+            Ioc.NavigationService?.NavigateToAuthorizationPage();
         }
 
 
@@ -38,7 +38,7 @@ namespace FourthTask.ViewModels
         private bool CanOpenAuthorizationCommandExecute(object parameter) => true;
         private void OnOpenAuthorizationCommandExecute(object parameter)
         {
-            Ioc.NavigationService.NavigateToAuthorizationPage();
+            Ioc.NavigationService?.NavigateToAuthorizationPage();
         }
 
         #endregion Commands

@@ -5,13 +5,13 @@ namespace FourthTask.ViewModels.Base
 {
     internal abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Запрос на обновление
         /// </summary>
         /// <param name="propertyName"></param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null!)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -24,7 +24,7 @@ namespace FourthTask.ViewModels.Base
         /// <param name="value"></param>
         /// <param name="PeopserName"></param>
         /// <returns></returns>
-        protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string peopserName = null)
+        protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string peopserName = null!)
         {
             if (Equals(field, value)) return false;
             field = value;

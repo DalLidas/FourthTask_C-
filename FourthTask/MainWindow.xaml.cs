@@ -23,7 +23,7 @@ namespace FourthTask
             InitializeComponent();
 
             Ioc.InitPages(_mainFrame);
-            Ioc.NavigationService.NavigateToAuthorizationPage();
+            Ioc.NavigationService?.NavigateToAuthorizationPage();
         }
     }
 }
