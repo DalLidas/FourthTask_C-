@@ -1,18 +1,10 @@
 ﻿using FourthTask.ViewModels.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using FourthTask.ViewModels.Commands;
 using FourthTask.PageNavigation.Ioc;
-using FourthTask.Models.Model;
-using System.Security;
-using System.Windows.Controls;
 using System.IO;
-using System.Diagnostics;
+
 
 namespace FourthTask.ViewModels
 {
@@ -33,14 +25,19 @@ namespace FourthTask.ViewModels
         private bool CanAuthorizationCommandExecute(object parameter) => true;
         private async void OnAuthorizationCommandExecute(object parameter)
         {
-            string dbPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location ?? "") ?? "", "MyData.db");
+            if (Ioc.model is not null && Ioc.model.DBConnector is not null) 
+            {
+                await Ioc.model.StartSession(_login, _password);
 
-            await Ioc.InitModel(dbPath, _login, _password);
-
-            if (Ioc.model is null || Ioc.model.GetSessionStatus())
-                Ioc.NavigationService?.NavigateToMainPage();
+                if (Ioc.model.GetSessionStatus())
+                    Ioc.NavigationService?.NavigateToMainPage();
+                else
+                    MessageBox.Show("Пользователя с таким логином и паролем не зарегистрировано");
+            }
             else
-                MessageBox.Show("Пользователя с таким логином и паролем не зарегистрировано");
+            {
+                MessageBox.Show("Проблемы с соединением с базой данных");
+            }
         }
 
         

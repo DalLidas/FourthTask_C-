@@ -41,10 +41,10 @@
                 </StackPanel.RenderTransform>
                 <TextBlock FontSize="30" FontWeight="Bold" Margin="0 0 0 20"><Run Language="ru-ru" Text="Регистрация аккаунта"/></TextBlock>
 
-                <TextBox materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5"/>
-                <PasswordBox materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0 5"/>
-                <PasswordBox materialDesign:HintAssist.Hint="Подтверждение пароля" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0 5"/>
-                <TextBox materialDesign:HintAssist.Hint="Почта" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5"/>
+                <TextBox Text="{Binding Login}" materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5"/>
+                <TextBox Text="{Binding Password}" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5"/>
+                <TextBox Text="{Binding SecondPassword}" materialDesign:HintAssist.Hint="Подтверждение пароля" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5"/>
+                <TextBox Text="{Binding Email}" materialDesign:HintAssist.Hint="Почта" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5"/>
 
                 <Button Content="Зарегистрироваться" Margin="0 20" Command="{Binding RegistrationCommand}"/>
 

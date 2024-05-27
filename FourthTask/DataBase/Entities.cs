@@ -21,10 +21,10 @@ namespace FourthTask.DataBase
     /// <summary>
     /// Таблица с пользователями
     /// </summary>
-    [Table("People")]
-    public class Person : TableBase
+    [Table("User")]
+    public class User : TableBase
     {
-        [PrimaryKey, AutoIncrement, Column("ID_People")]
+        [PrimaryKey, AutoIncrement, Column("ID_User")]
         public override int ID { get; set; }
 
         [NotNull]

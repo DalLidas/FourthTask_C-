@@ -10,18 +10,11 @@ namespace FourthTask.DataBase.Connector
     /// </summary>
     public class DBConnectorManager
     {
-
-#if DEBUG
-        const bool DEBUG_MOD = true;
-#else
-        const bool DEBUG_MOD = false;
-#endif
-
         public string personeTableName { get; }
         public string trainRoatTableName { get; }
 
         private readonly SQLiteAsyncConnection? db;
-        public TableHandleAsync<Person>? person;
+        public TableHandleAsync<User>? person;
         public TableHandleAsync<TrainRoat>? trainRoat;
 
 
@@ -34,7 +27,7 @@ namespace FourthTask.DataBase.Connector
 
             if (db is not null)
             {
-                person = new TableHandleAsync<Person>(db);
+                person = new TableHandleAsync<User>(db);
                 trainRoat = new TableHandleAsync<TrainRoat>(db);
             }
         }
@@ -50,7 +43,7 @@ namespace FourthTask.DataBase.Connector
         {
             if (db is not null)
             {
-                await db.CreateTableAsync<Person>();
+                await db.CreateTableAsync<User>();
                 await db.CreateTableAsync<TrainRoat>();
             }
         }

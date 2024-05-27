@@ -2,8 +2,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using FourthTask.PageNavigation.Ioc;
 using FourthTask.ViewModels.Base;
 using FourthTask.ViewModels.Commands;
+using System.IO;
 
 namespace FourthTask.ViewModels
 {
@@ -11,11 +13,7 @@ namespace FourthTask.ViewModels
     {
         public MainWindowViewModel()
         {
-            #region Команды
-
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecute);
-
-            #endregion Команды
         }
 
 

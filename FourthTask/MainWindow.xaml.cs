@@ -1,14 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FourthTask.Models.Model;
 using FourthTask.PageNavigation.Ioc;
 
 namespace FourthTask
@@ -22,6 +13,9 @@ namespace FourthTask
         {
             InitializeComponent();
 
+            string dbPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location ?? "") ?? "", "MyData.db");
+            
+            Ioc.InitModel(dbPath);
             Ioc.InitPages(_mainFrame);
             Ioc.NavigationService?.NavigateToAuthorizationPage();
         }

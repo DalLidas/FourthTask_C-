@@ -30,10 +30,10 @@ namespace FourthTask.PageNavigation.Ioc
             _container = builder.Build();
         }
 
-        public static async Task InitModel(string dbPath, string login, string password)
+        public static async Task InitModel(string dbPath)
         {
             model = new Model();
-            await model.InitModel(dbPath, login, password);
+            await model.InitModel(dbPath);
         }
     }
 }

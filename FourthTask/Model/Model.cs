@@ -10,6 +10,7 @@ using FourthTask.DataBase.Connector;
 using System.Security;
 using System.Data.Common;
 using FourthTask.DataBase;
+using Newtonsoft.Json.Linq;
 
 
 namespace FourthTask.Models.Model
@@ -30,38 +31,28 @@ namespace FourthTask.Models.Model
         #endif
 
         public DBConnectorManager? DBConnector;
-        private Person? sessionUser;
+        private User? sessionUser;
 
         private bool sessionStartedFlag;
         private Privilages sessionPrivilages;
 
-        public async Task<bool> InitModel(string dbPath, string login, string password)
-        {
-            //const string DATABASE_NAME = "DB.db";
-            if (DEBUG_MOD) MessageBox.Show($"dbPath = {dbPath}, login = {login},  password = {password}");
-            
+        public async Task<bool> InitModel(string dbPath)
+        {            
             DBConnector = new DBConnectorManager(dbPath);
             if (DBConnector is null) return false;
             await DBConnector.InitAsync();
 
+            sessionUser = null;
+            sessionStartedFlag = false;
+            sessionPrivilages = Privilages.None;
+
             if (DEBUG_MOD) MessageBox.Show($"Создался контейнер для базы данных");
+            return DBConnector is not null;
+        }
 
-
-            //var person1 = new Person
-            //{
-            //    Login = login,
-            //    Password = password,
-            //    Email = "Mail@mail.ru",
-            //    Privilages = "Admin"
-            //};
-
-            //if (DBConnector is not null && DBConnector.person is not null)
-            //{
-            //    await DBConnector.person.SaveItemAsync(person1);
-            //}
-
-            //if (DEBUG_MOD) MessageBox.Show($"Создался  Login = {login}, Password = {password}");
-
+        public async Task<bool> StartSession(string login, string password)
+        {
+            if (DEBUG_MOD) MessageBox.Show($"Текущий login = {login},  Текущий password = {password}");
             if (DBConnector is not null && DBConnector.person is not null)
             {
                 var users = await DBConnector.person.GetItemsAsync().ConfigureAwait(false);
@@ -76,18 +67,22 @@ namespace FourthTask.Models.Model
                             if (user.Login == login && user.Password == password)
                             {
                                 sessionUser = user;
-                            }
 
-                            state.Break();
+                                sessionStartedFlag = true;
+                                sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
+                                
+                                if (DEBUG_MOD)
+                                    MessageBox.Show($"Добро пожаловать id:{sessionUser?.ID}, Login:{sessionUser?.Login}, Privilages:{sessionUser?.Privilages}");
+
+                                state.Break();
+                            }
                         });
+
                         tasks.Add(task);
                     });
 
                     // Выполнение всех тасков
                     Task.WaitAll(tasks.ToArray());
-
-                    if (DEBUG_MOD)
-                        MessageBox.Show($"Добро пожаловать id:{sessionUser?.ID}, Login:{sessionUser?.Login}, Privilages:{sessionUser?.Privilages}");
                 }
             }
             else
@@ -97,12 +92,7 @@ namespace FourthTask.Models.Model
             }
 
 
-            if (sessionUser is not null)
-            {
-                sessionStartedFlag = true;
-                sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
-            }
-            else
+            if (sessionUser is null)
             {
                 sessionStartedFlag = false;
                 sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
@@ -110,6 +100,55 @@ namespace FourthTask.Models.Model
 
             if (DEBUG_MOD) MessageBox.Show($"Конец инициализации базы данных");
             return sessionStartedFlag;
+        }
+
+        public async Task<bool> RegistrateUser(string login, string password, string email)
+        {
+            if (DBConnector is not null && DBConnector.person is not null)
+            {
+                bool LoginAlreadyTaken = false;
+                var users = await DBConnector.person.GetItemsAsync().ConfigureAwait(false);
+                List<Task> tasks = new List<Task>();
+
+                if (users is not null)
+                {
+                    Parallel.ForEach(users, (user, state) =>
+                    {
+                        var task = Task.Run(() =>
+                        {
+                            if (user.Login == login)
+                            {
+                                sessionUser = user;
+                                LoginAlreadyTaken = true;
+
+                                state.Break();
+                            }
+                        });
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+
+                if (LoginAlreadyTaken is false)
+                {
+                    var user = new User
+                    {
+                        Login = login,
+                        Password = password,
+                        Email = email,
+                        Privilages = "User"
+                    };
+
+                    await DBConnector.person.SaveItemAsync(user);
+
+                    if (DEBUG_MOD) MessageBox.Show($"Создался  Login = {login}, Password = {password}");
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private Privilages SetPrivilagesLevel(string privilages)
