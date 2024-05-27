@@ -36,31 +36,20 @@ namespace FourthTask.ViewModels
 
         #region Поля
 
-        #region Заголовок окна
         private string _Title = "Trains manager";
-
-        /// <summary>
-        /// Заголовок окна
-        /// </summary>
         public string Title 
         { 
             get => _Title;
             set => Set(ref _Title, value);
         }
-        #endregion Заголовок окна
 
-        #region Статус окна
+
         private string _Status = "Working hard";
-
-        /// <summary>
-        /// Заголовок окна
-        /// </summary>
         public string Status
         {
             get => _Status;
             set => Set(ref _Status, value);
         }
-        #endregion Статус окна
 
         #endregion Поля
     }

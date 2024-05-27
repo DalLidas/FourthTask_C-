@@ -14,7 +14,7 @@
         <vm:MainWindowViewModel/>
     </Page.DataContext>
 
-    <DockPanel>
+    <DockPanel Background="White">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}"/>

@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FourthTask.Models.Model;
+using FourthTask.PageNavigation.Ioc;
 
 namespace FourthTask
 {
@@ -19,7 +21,9 @@ namespace FourthTask
         public MainWindow()
         {
             InitializeComponent();
-            _mainFrame.Content = new AuthorizationPage();
+
+            Ioc.InitPages(_mainFrame);
+            Ioc.NavigationService.NavigateToAuthorizationPage();
         }
     }
 }

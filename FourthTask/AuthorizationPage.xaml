@@ -18,7 +18,7 @@
       FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
-        <vm:AthorizationViewModel/>
+        <vm:AuthorizationViewModel/>
     </Page.DataContext>
 
     <Grid>
@@ -33,13 +33,17 @@
             <StackPanel Height="239">
                 <TextBlock FontSize="30" FontWeight="Bold" Margin="0 0 0 20"><Run Language="ru-ru" Text="Вход в аккаунт"/></TextBlock>
 
-                <TextBox materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                <PasswordBox materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0 5"/>
+                <TextBox Text="{Binding Login}" materialDesign:HintAssist.Hint="Логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <TextBox Text="{Binding Password}" materialDesign:HintAssist.Hint="Пароль" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 5" />
 
                 <Button Content="Ввойти" Margin="0 20" Command="{Binding AuthorizationCommand}"/>
 
                 <Grid Margin="0 0 0 20">
-                    <Button Content="Зарегистрировать аккаунт?" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding OpenRegistrationWindowCommand}"/>
+                    <Button
+                        Content="Зарегистрировать аккаунт?" 
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Command="{Binding OpenRegistrationWindowCommand}"/>
                 </Grid>
             </StackPanel>
         </Border>

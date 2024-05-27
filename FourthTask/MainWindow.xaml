@@ -15,7 +15,7 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
-    <Grid Height="auto" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">       
+    <Grid Height="auto" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Frame
             Grid.RowSpan="2"
             HorizontalAlignment="Stretch" 
@@ -24,7 +24,6 @@
             VerticalContentAlignment="Stretch"  
             Name="_mainFrame" 
             NavigationUIVisibility="Hidden"/>
-
     </Grid>
 
 </Window>
