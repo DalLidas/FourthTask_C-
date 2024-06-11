@@ -25,11 +25,14 @@
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Static/Images/AuthorizationBackground.jpg" />
         </Grid.Background>
-
+        
+        <!--Главная карточка Аунтификации-->
         <Border Margin="15,0,15,0" MaxWidth="600" Background="White" VerticalAlignment="Center" Padding="30" CornerRadius="15" Height="317">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
             </Border.Effect>
+
+            <!--Контент карточки-->
             <StackPanel Height="239">
                 <TextBlock FontSize="30" FontWeight="Bold" Margin="0 0 0 20"><Run Language="ru-ru" Text="Вход в аккаунт"/></TextBlock>
 

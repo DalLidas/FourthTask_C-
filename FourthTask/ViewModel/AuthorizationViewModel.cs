@@ -27,7 +27,7 @@ namespace FourthTask.ViewModels
         {
             if (Ioc.model is not null && Ioc.model.DBConnector is not null) 
             {
-                await Ioc.model.StartSession(_login, _password);
+                await Ioc.model.StartSession(_login.Trim(), _password.Trim());
 
                 if (Ioc.model.GetSessionStatus())
                     Ioc.NavigationService?.NavigateToMainPage();

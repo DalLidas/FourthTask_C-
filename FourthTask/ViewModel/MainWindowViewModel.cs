@@ -6,13 +6,19 @@ using FourthTask.PageNavigation.Ioc;
 using FourthTask.ViewModels.Base;
 using FourthTask.ViewModels.Commands;
 using System.IO;
+using System.Collections.ObjectModel;
+using FourthTask.DataBase;
 
 namespace FourthTask.ViewModels
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+
+        private ObservableCollection<TrainRoat> _trainRoats;
         public MainWindowViewModel()
         {
+            _trainRoats = new ObservableCollection<TrainRoat>();
+
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecute);
         }
 
@@ -48,6 +54,7 @@ namespace FourthTask.ViewModels
             get => _Status;
             set => Set(ref _Status, value);
         }
+
 
         #endregion Поля
     }

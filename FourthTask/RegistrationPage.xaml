@@ -26,10 +26,13 @@
             <ImageBrush ImageSource="pack://application:,,,/Static/Images/AuthorizationBackground.jpg" />
         </Grid.Background>
 
+        <!--Главная карточка Регистрации-->
         <Border Margin="15,0,15,0" MaxWidth="600" Background="White" VerticalAlignment="Center" Padding="30" CornerRadius="15" Height="419">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
             </Border.Effect>
+
+            <!--Содержимое карточки-->
             <StackPanel Margin="0,20,0,0" Height="354" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
                     <TransformGroup>

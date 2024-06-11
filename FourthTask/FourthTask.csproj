@@ -10,10 +10,13 @@
 
   <ItemGroup>
     <None Remove="Static\Images\AuthorizationBackground.jpg" />
+    <None Remove="Static\Images\StandartUserIcon.jpg" />
+    <None Remove="Static\Images\StandartUserLogo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.0.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageReference Include="MaterialDesignColors" Version="3.0.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
@@ -21,8 +24,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Static/Images/train-menu-icon.png" />
-    <Resource Include="Static\Images\AuthorizationBackground.jpg" />
+    <Resource Include="Static/Images/train-menu-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\StandartUserIcon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\StandartUserLogo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\AuthorizationBackground.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

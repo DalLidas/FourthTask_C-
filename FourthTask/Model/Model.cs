@@ -36,11 +36,33 @@ namespace FourthTask.Models.Model
         private bool sessionStartedFlag;
         private Privilages sessionPrivilages;
 
+
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>
+        /// <param name="dbPath">Путь к базе данных</param>
+        /// <returns></returns>
         public async Task<bool> InitModel(string dbPath)
-        {            
+        {
+            bool createNewDBFlag = false;
+            if (!File.Exists(dbPath)) createNewDBFlag = true;
+
             DBConnector = new DBConnectorManager(dbPath);
             if (DBConnector is null) return false;
             await DBConnector.InitAsync();
+
+            if (createNewDBFlag is true && DBConnector is not null && DBConnector.person is not null)
+            {
+                User rootUser = new User()
+                {
+                    Login = "root",
+                    Password = "root",
+                    Email = "danil.mukhametov@mail.ru",
+                    Privilages = "Admin"
+                };
+
+                await DBConnector.person.SaveItemAsync(rootUser);
+            }
 
             sessionUser = null;
             sessionStartedFlag = false;
@@ -50,6 +72,13 @@ namespace FourthTask.Models.Model
             return DBConnector is not null;
         }
 
+
+        /// <summary>
+        /// Запуск сессии для работы с моделью
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns></returns>
         public async Task<bool> StartSession(string login, string password)
         {
             if (DEBUG_MOD) MessageBox.Show($"Текущий login = {login},  Текущий password = {password}");
@@ -91,7 +120,6 @@ namespace FourthTask.Models.Model
                 sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
             }
 
-
             if (sessionUser is null)
             {
                 sessionStartedFlag = false;
@@ -102,6 +130,14 @@ namespace FourthTask.Models.Model
             return sessionStartedFlag;
         }
 
+
+        /// <summary>
+        /// Регистрация пользователя
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="email">мейл</param>
+        /// <returns></returns>
         public async Task<bool> RegistrateUser(string login, string password, string email)
         {
             if (DBConnector is not null && DBConnector.person is not null)

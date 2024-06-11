@@ -4,6 +4,9 @@ using System.Windows;
 using FourthTask.ViewModels.Commands;
 using FourthTask.PageNavigation.Ioc;
 using System.IO;
+using System.Net.Mail;
+using System;
+using System.Text.RegularExpressions;
 
 namespace FourthTask.ViewModels
 {
@@ -24,15 +27,33 @@ namespace FourthTask.ViewModels
         private bool CanRegistrationCommandExecute(object parameter) => true;
         private async void OnRegistrationCommandExecute(object parameter)
         {
+            //Проверка данных аккаунта
+            string errorMSG = "";
+
+            if (_password != _secondPassword) errorMSG += "Неверный введён повторный пароль\n";
+            if (!Regex.IsMatch(_email, @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*")) errorMSG += "Неправильный формат почты\n";
+
+            if (errorMSG != "")
+            {
+                MessageBox.Show(errorMSG);
+                return;
+            }
+
+            //Регистрация аккаунта
             if (Ioc.model is not null && Ioc.model.DBConnector is not null) 
             {
                 bool ans = false; // False - Имя пользователя занято, True - Добавлен новый пользователь
-                ans = await Ioc.model.RegistrateUser(Login, Password, _email);
+                ans = await Ioc.model.RegistrateUser(_login.Trim(), _password.Trim(), _email.Trim());
 
                 if (ans)
+                {
                     Ioc.NavigationService?.NavigateToAuthorizationPage();
+                    MessageBox.Show("Пользователь успешно зарегистрирован");
+                }
                 else
+                {
                     MessageBox.Show("Пользователя с таким логином и паролем yже зарегистрирован");
+                }
             }
             else
             {
