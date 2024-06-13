@@ -9,7 +9,7 @@
         Title="{Binding Title}" 
         Height="600" Width="1200" MinHeight="550" MinWidth="550"
         FontFamily="Bahnschrift" FontSize="18" 
-        Icon="/Static/Images/train-menu-icon.png">
+        Icon="/Static/Images/train-menu-icon.png"
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
