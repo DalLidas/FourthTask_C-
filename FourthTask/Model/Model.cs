@@ -11,31 +11,36 @@ using System.Security;
 using System.Data.Common;
 using FourthTask.DataBase;
 using Newtonsoft.Json.Linq;
+using FourthTask.PageNavigation.Ioc;
 
 
-namespace FourthTask.Models.Model
+namespace FourthTask.Models
 {
     public enum Privilages
     {
         None = 0,
         admin = 1,
-        user = 2,
+        deanWorkman = 2,
+        teacher = 3,
+        student = 4,
     }
 
     public class Model
     {
-        #if DEBUG 
+
+#if RELISE // DEBUG // RELISE
         const bool DEBUG_MOD = true;
-        #else
+#else
         const bool DEBUG_MOD = false;
-        #endif
+#endif
 
         public DBConnectorManager? DBConnector;
         private User? sessionUser;
+        private Student? currStudent;
+        private Staff? currStaff;
 
         private bool sessionStartedFlag;
         private Privilages sessionPrivilages;
-
 
         /// <summary>
         /// Инициализация базы данных
@@ -73,6 +78,19 @@ namespace FourthTask.Models.Model
         }
 
 
+        #region Admin
+        #endregion Admin
+
+        #region deanWorkman
+        #endregion deanWorkman
+
+        #region teacher
+        #endregion teacher
+
+        #region student
+        #endregion student
+
+
         /// <summary>
         /// Запуск сессии для работы с моделью
         /// </summary>
@@ -99,7 +117,7 @@ namespace FourthTask.Models.Model
 
                                 sessionStartedFlag = true;
                                 sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
-                                
+
                                 if (DEBUG_MOD)
                                     MessageBox.Show($"Добро пожаловать id:{sessionUser?.ID}, Login:{sessionUser?.Login}, Privilages:{sessionUser?.Privilages}");
 
@@ -120,14 +138,38 @@ namespace FourthTask.Models.Model
                 sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
             }
 
+            
             if (sessionUser is null)
             {
                 sessionStartedFlag = false;
                 sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
             }
+            else if (DBConnector is not null && DBConnector.student is not null && DBConnector.staff is not null && sessionUser is not null)
+            {
+                if (sessionPrivilages == Privilages.student)
+                {   
+                     currStudent = await DBConnector.student.GetItemAsync(sessionUser.ID);
+                }
+                else if (sessionPrivilages == Privilages.deanWorkman || sessionPrivilages == Privilages.teacher)
+                {
+                    currStaff = await DBConnector.staff.GetItemAsync(sessionUser.ID);
+                }
+            }
 
+            
             if (DEBUG_MOD) MessageBox.Show($"Конец инициализации базы данных");
             return sessionStartedFlag;
+        }
+
+
+        /// <summary>
+        /// Закрывает сессию
+        /// </summary>
+        public void CloseSession()
+        {
+            sessionUser = null;
+            sessionStartedFlag = false;
+            sessionPrivilages = Privilages.None;
         }
 
 
@@ -144,10 +186,10 @@ namespace FourthTask.Models.Model
             {
                 bool LoginAlreadyTaken = false;
                 var users = await DBConnector.person.GetItemsAsync().ConfigureAwait(false);
-                List<Task> tasks = new List<Task>();
 
                 if (users is not null)
                 {
+                    List<Task> tasks = new List<Task>();
                     Parallel.ForEach(users, (user, state) =>
                     {
                         var task = Task.Run(() =>
@@ -174,12 +216,13 @@ namespace FourthTask.Models.Model
                         Login = login,
                         Password = password,
                         Email = email,
-                        Privilages = "User"
+                        Privilages = "Student"
                     };
 
                     await DBConnector.person.SaveItemAsync(user);
 
-                    if (DEBUG_MOD) MessageBox.Show($"Создался  Login = {login}, Password = {password}");
+                    //if (DEBUG_MOD) MessageBox.Show($"Создался  Login = {login}, Password = {password}");
+                    MessageBox.Show($"Создался  Login = {login}, Password = {password}");
                     return true;
                 }
             }
@@ -187,22 +230,120 @@ namespace FourthTask.Models.Model
             return false;
         }
 
+
+        public async Task<List<Subject>> GetSubjects()
+        {
+            var subjects = new List<Subject>();
+
+            if (DBConnector is not null && DBConnector.subject is not null)
+            {
+                var requst = await DBConnector.subject.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => subjects.Add(item));
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return subjects;
+        }
+
+
+        public async Task<List<Student>> GetStudentsGroupmates()
+        {
+            var groupmates = new List<Student>();
+
+            if (DBConnector is not null && DBConnector.student is not null && sessionUser is not null && currStudent is not null)
+            {
+                var requst = await DBConnector.student.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.GroupID == currStudent?.GroupID)
+                            {
+                                groupmates.Add(item);
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return groupmates;
+        }
+
+
+        public async Task<List<Exam>> GetExams()
+        {
+            var exams = new List<Exam>();
+
+            if (DBConnector is not null && DBConnector.exam is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.exam.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.GroupID == currStudent?.GroupID)
+                            {
+                                exams.Add(item);
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return exams;
+        }
+
+
         private Privilages SetPrivilagesLevel(string privilages)
         {
             switch(privilages)
             {
                 case "Admin":
                     return Privilages.admin;
-                case "User":
-                    return Privilages.user;
+                case "DeanWorkman":
+                    return Privilages.deanWorkman;
+                case "Teacher":
+                    return Privilages.teacher;
+                case "Student":
+                    return Privilages.student;
                 default:
                     return Privilages.None;
             }
         }
 
+
         public bool GetSessionStatus(){
             return sessionStartedFlag;
         }
+
 
         public Privilages GetSessionPrivilages()
         {

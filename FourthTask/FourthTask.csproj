@@ -10,6 +10,12 @@
 
   <ItemGroup>
     <None Remove="Static\Images\AuthorizationBackground.jpg" />
+    <None Remove="Static\Images\MainBackground.jpg" />
+    <None Remove="Static\Images\MainBackground1.jpg" />
+    <None Remove="Static\Images\MainBackground2.jpg" />
+    <None Remove="Static\Images\MainBackground3.jpg" />
+    <None Remove="Static\Images\MainBackground3.png" />
+    <None Remove="Static\Images\MainWindow.jpg" />
     <None Remove="Static\Images\StandartUserIcon.jpg" />
     <None Remove="Static\Images\StandartUserLogo.jpg" />
   </ItemGroup>
@@ -24,7 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Static/Images/train-menu-icon.png">
+    <Resource Include="Static\Images\MainBackground.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\MainBackground1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\MainBackground2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\MainWindow.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Static\Images\StandartUserIcon.jpg">

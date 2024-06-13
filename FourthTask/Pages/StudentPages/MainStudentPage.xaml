@@ -1,0 +1,87 @@
+﻿<Page x:Class="FourthTask.MainStudentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:FourthTask.ViewModels"
+      xmlns:local="clr-namespace:FourthTask"
+      mc:Ignorable="d" 
+      
+      xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="RoatManager" Width="auto" Height="auto" MinHeight="550" MinWidth="500"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Page.DataContext>
+        <vm:MainStudentPageViewModel/>
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="800*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="550*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Border Background="#623ed0" HorizontalAlignment="Center" Margin="0,47,0,10" CornerRadius="0 20 20 0" Width="200">
+            <DockPanel>
+                <!--Лого пользователя-->
+                <Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100"
+                        DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="20 -30 0 0" VerticalAlignment="Top">
+                    <Ellipse>
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="pack://application:,,,/Static/Images/StandartUserIcon.jpg"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Border>
+                <TextBlock FontSize="20" HorizontalAlignment="Center" Margin="20 0 5 20"><Run Language="ru-ru" Foreground="White" Text="Cтудент"/></TextBlock>
+            </DockPanel>
+        </Border>
+
+        <Button Grid.Column="0" Margin="0,53,129,0" Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.5,0.5" Height="32" VerticalAlignment="Top">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="1"/>
+            </Button.Effect>
+
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <iconPacks:PackIconMaterial Kind="Menu" Width="25" Height="25" Foreground="WhiteSmoke"/>
+        </Button>
+
+        <Frame
+            Grid.Column="1"
+            Margin="10,47, 10, 10" 
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"  
+            Name="_mainStudentPageFrame" 
+            NavigationUIVisibility="Hidden"/>
+
+        <!--Для студентов-->
+        <Button Command="{Binding ShowStudentMyGroupCommand}" Margin="0,170,0,347" Content="Моя группа" />
+        <Button Command="{Binding ShowSubjectCommand}" Margin="0,210,0,306" Content="Мои преподаватели" />
+        <Button Command="{Binding ShowSubjectCommand}" Margin="0,250,0,266" Content="Мои экзамены" />
+        <Button Command="{Binding ShowSubjectCommand}" Margin="0,290,0,227" Content="Работники вуза" />
+
+        <Button Command="{Binding ExitUserCommand}" Margin="0,483,0,35" Content="Выход из учётной записи" />
+
+    </Grid>
+</Page>

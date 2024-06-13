@@ -1,0 +1,50 @@
+﻿<Page x:Class="FourthTask.Pages.StudentPages.StudentsGroupmatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:FourthTask.ViewModels"
+      xmlns:local="clr-namespace:FourthTask.Pages.StudentPages"
+      mc:Ignorable="d" 
+      
+       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         Title="RoatManager" Width="auto" Height="auto" MinHeight="300" MinWidth="300"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Page.DataContext>
+        <vm:GroupmatesVM/>
+    </Page.DataContext>
+
+    <Grid >
+        <Border Grid.Column="1" Background="#623ed0" Padding="10" CornerRadius="10">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid ItemsSource="{Binding Groupmates}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedStudent}" Margin="0,0,0,6" IsReadOnly="True">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Binding="{Binding ID}" Header="ID" />
+                        <DataGridTextColumn Binding="{Binding FullName}" Header="Фио"/>
+                        <DataGridTextColumn Binding="{Binding GroupID}" Header="Группа"/>
+                        <DataGridTextColumn Binding="{Binding Birth}" Header="Год рождения"/>
+                        <DataGridTextColumn Binding="{Binding AdmissionDate}" Header="Год застсления"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="{Binding SelectedStudent.ID, StringFormat='Выбранный ID {0}'}" Foreground="White"  Grid.Row="1" />
+            </Grid>
+        </Border>
+    </Grid>
+
+</Page>

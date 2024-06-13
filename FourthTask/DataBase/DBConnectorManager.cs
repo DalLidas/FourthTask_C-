@@ -14,8 +14,15 @@ namespace FourthTask.DataBase.Connector
         public string trainRoatTableName { get; }
 
         private readonly SQLiteAsyncConnection? db;
+
         public TableHandleAsync<User>? person;
-        public TableHandleAsync<TrainRoat>? trainRoat;
+        public TableHandleAsync<Staff>? staff;
+        public TableHandleAsync<Student>? student;
+        public TableHandleAsync<Group>? group;
+        public TableHandleAsync<Subject>? subject;
+        public TableHandleAsync<Specialization>? specialization;
+        public TableHandleAsync<Exam>? exam;
+        public TableHandleAsync<Journal>? journal;
 
 
         public DBConnectorManager(string dbPath)
@@ -28,7 +35,13 @@ namespace FourthTask.DataBase.Connector
             if (db is not null)
             {
                 person = new TableHandleAsync<User>(db);
-                trainRoat = new TableHandleAsync<TrainRoat>(db);
+                staff = new TableHandleAsync<Staff>(db);
+                student = new TableHandleAsync<Student>(db);
+                group = new TableHandleAsync<Group>(db);
+                subject = new TableHandleAsync<Subject>(db);
+                specialization = new TableHandleAsync<Specialization>(db);
+                exam = new TableHandleAsync<Exam>(db);
+                journal = new TableHandleAsync<Journal>(db);
             }
         }
 
@@ -36,7 +49,13 @@ namespace FourthTask.DataBase.Connector
         {
             db?.CloseAsync();
             person = null;
-            trainRoat = null;
+            staff = null;
+            student = null;
+            group = null;
+            subject = null;
+            specialization = null;
+            exam = null;
+            journal = null;
         }
 
         public async Task InitAsync()
@@ -44,7 +63,13 @@ namespace FourthTask.DataBase.Connector
             if (db is not null)
             {
                 await db.CreateTableAsync<User>();
-                await db.CreateTableAsync<TrainRoat>();
+                await db.CreateTableAsync<Staff>();
+                await db.CreateTableAsync<Student>();
+                await db.CreateTableAsync<Group>();
+                await db.CreateTableAsync<Subject>();
+                await db.CreateTableAsync<Specialization>();
+                await db.CreateTableAsync<Exam>();
+                await db.CreateTableAsync<Journal>();
             }
         }
     }

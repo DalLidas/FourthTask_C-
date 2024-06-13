@@ -7,9 +7,9 @@
         xmlns:local="clr-namespace:FourthTask"
         mc:Ignorable="d"
         Title="{Binding Title}" 
-        Height="600" Width="1200" MinHeight="550" MinWidth="550"
+        MaxHeight="600" MaxWidth="1200" MinHeight="600" MinWidth="550"
         FontFamily="Bahnschrift" FontSize="18" 
-        Icon="/Static/Images/train-menu-icon.png"
+        Icon="pack://application:,,,/Static/Images/MainWindow.jpg">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -17,7 +17,6 @@
 
     <Grid Height="auto" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Frame
-            Grid.RowSpan="2"
             HorizontalAlignment="Stretch" 
             VerticalAlignment="Stretch" 
             HorizontalContentAlignment="Stretch"

@@ -41,19 +41,138 @@ namespace FourthTask.DataBase
     }
 
     /// <summary>
-    /// Таблица с Путями поездов
+    /// Таблица с работниками вуза. Деканат + преподаватели
     /// </summary>
-    [Table("TrainRoat")]
-    public class TrainRoat : TableBase
+    [Table("Staff")]
+    public class Staff : TableBase
     {
-        [PrimaryKey, AutoIncrement, Column("ID_TrainRoat")]
+        [PrimaryKey, AutoIncrement, Column("ID_Staff")]
+        public override int ID { get; set; }
+
+        [NotNull] 
+        public string? FullName { get; set; }
+
+        [NotNull]
+        public string? Birth { get; set; }
+
+        [NotNull]
+        public string? Job { get; set; }
+
+        [NotNull]
+        public string? Merit { get; set; }
+
+        [NotNull]
+        public int? Internship { get; set; }
+    }
+
+    /// <summary>
+    /// Таблица со студентами
+    /// </summary>
+    [Table("Student")]
+    public class Student : TableBase
+    {
+        [PrimaryKey, AutoIncrement, Column("ID_Student")]
+        public override int ID { get; set; }
+
+        [NotNull]
+        public string? FullName { get; set; }
+
+        [NotNull]
+        public string? Birth { get; set; }
+
+        [NotNull]
+        public int? GroupID { get; set; }
+
+        [NotNull]
+        public string? AdmissionDate { get; set; }
+
+        [NotNull]
+        public string? Data { get; set; }
+    }
+
+    /// <summary>
+    /// Таблица с группами
+    /// </summary>
+    [Table("Group")]
+    public class Group : TableBase
+    {
+        [PrimaryKey, AutoIncrement, Column("ID_Group")]
+        public override int ID { get; set; }
+
+        [NotNull]
+        public string? Faculty { get; set; }
+
+        [NotNull]
+        public string? Name { get; set; }
+    }
+
+    /// <summary>
+    /// Таблица с предметом 
+    /// </summary>
+    [Table("Subject")]
+    public class Subject : TableBase
+    {
+        [PrimaryKey, AutoIncrement, Column("ID_Subject")]
         public override int ID { get; set; }
 
         [NotNull]
         public string? Name { get; set; }
+    }
+
+    /// <summary>
+    /// Таблица со специализацией
+    /// </summary>
+    [Table("Specialization")]
+    public class Specialization : TableBase
+    {
+        [PrimaryKey, AutoIncrement, Column("ID_Specialization")]
+        public override int ID { get; set; }
+
         [NotNull]
-        public string? Date { get; set ; }
+        public int? TeacherID { get; set; }
+
         [NotNull]
-        public string? Places { get; set; }
+        public int? SubjectID { get; set; }
+    }
+
+    /// <summary>
+    /// Таблица с экзаменами
+    /// </summary>
+    [Table("Exam")]
+    public class Exam : TableBase
+    {
+        [PrimaryKey, AutoIncrement, Column("ID_Exam")]
+        public override int ID { get; set; }
+
+        [NotNull]
+        public string? Date { get; set; }
+
+        [NotNull]
+        public string? RatingMethod { get; set; }
+
+        [NotNull]
+        public int? GroupID { get; set; }
+
+        [NotNull]
+        public int? SpecializationID { get; set; }
+    }
+
+    /// <summary>
+    /// Таблица с экзаменами
+    /// </summary>
+    [Table("Journal")]
+    public class Journal : TableBase
+    {
+        [PrimaryKey, AutoIncrement, Column("ID_Journal")]
+        public override int ID { get; set; }
+
+        [NotNull]
+        public int? ExamID { get; set; }
+
+        [NotNull]
+        public int? StudentID { get; set; }
+
+        [NotNull]
+        public int? Grade { get; set; }
     }
 }

@@ -14,10 +14,10 @@ namespace FourthTask
             InitializeComponent();
 
             string dbPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location ?? "") ?? "", "MyData.db");
-            
-            Ioc.InitModel(dbPath);
+
+            _ = Ioc.InitModel(dbPath);
             Ioc.InitPages(_mainFrame);
-            Ioc.NavigationService?.NavigateToAuthorizationPage();
+            Ioc.MainNavigationService?.NavigateToAuthorizationPage();
         }
     }
 }
