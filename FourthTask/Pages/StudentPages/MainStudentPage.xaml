@@ -77,8 +77,8 @@
 
         <!--Для студентов-->
         <Button Command="{Binding ShowStudentMyGroupCommand}" Margin="0,170,0,347" Content="Моя группа" />
-        <Button Command="{Binding ShowSubjectCommand}" Margin="0,210,0,306" Content="Мои преподаватели" />
-        <Button Command="{Binding ShowSubjectCommand}" Margin="0,250,0,266" Content="Мои экзамены" />
+        <Button Command="{Binding ShowDeanWorkmanCommand}" Margin="0,210,0,306" Content="Мои преподаватели" />
+        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,250,0,266" Content="Мои экзамены" />
         <Button Command="{Binding ShowSubjectCommand}" Margin="0,290,0,227" Content="Работники вуза" />
 
         <Button Command="{Binding ExitUserCommand}" Margin="0,483,0,35" Content="Выход из учётной записи" />

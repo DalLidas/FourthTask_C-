@@ -7,11 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using FourthTask.DataBase.Connector;
+using System.Collections.Concurrent;
 using System.Security;
 using System.Data.Common;
 using FourthTask.DataBase;
 using Newtonsoft.Json.Linq;
 using FourthTask.PageNavigation.Ioc;
+using FourthTask.ViewModels;
 
 
 namespace FourthTask.Models
@@ -88,6 +90,227 @@ namespace FourthTask.Models
         #endregion teacher
 
         #region student
+
+
+        public async Task<List<Subject>> GetSubjects()
+        {
+            var subjects = new List<Subject>();
+
+
+            if (DBConnector is not null && DBConnector.subject is not null)
+            {
+                var requst = await DBConnector.subject.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (subjects)
+                            {
+                                subjects.Add(item);
+                            }
+                        }
+                        );
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return subjects;
+        }
+
+
+        public async Task<List<Student>> GetStudentsGroupmates()
+        {
+            var groupmates = new List<Student>();
+
+            if (DBConnector is not null && DBConnector.student is not null && sessionUser is not null && currStudent is not null)
+            {
+                var requst = await DBConnector.student.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.GroupID == currStudent?.GroupID)
+                            {
+                                lock (groupmates)
+                                {
+                                    groupmates.Add(item);
+                                }
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return groupmates;
+        }
+
+
+        public async Task<List<Exam>> GetExams()
+        {
+            var exams = new List<Exam>();
+
+            if (DBConnector is not null && DBConnector.exam is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.exam.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.GroupID == currStudent?.GroupID)
+                            {
+                                lock (exams)
+                                {
+                                    exams.Add(item);
+                                }
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return exams;
+        }
+
+
+        // Получение специализации по Id
+        public async Task<Specialization> GetSpecialization(int specializationId)
+        {
+            var specialization = new Specialization();
+
+            if (DBConnector is not null && DBConnector.specialization is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.specialization.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, (item, state) =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.ID == currStudent?.GroupID)
+                            {
+                                lock (specialization)
+                                {
+                                    specialization = item;
+                                }
+
+                                state.Break();
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return specialization;
+        }
+
+
+        //Получение преподавателя по Id
+        public async Task<Staff> GetTeacher(int teacherId)
+        {
+            var teacher = new Staff();
+
+            if (DBConnector is not null && DBConnector.staff is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.staff.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+
+                    Parallel.ForEach(requst, (item, state) =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.ID == teacherId)
+                            {
+                                lock (teacher)
+                                {
+                                    teacher = item;
+                                }
+
+                                state.Break();
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return teacher;
+        }
+
+
+        //Получение предмета по Id
+        public async Task<Subject> GetSubject(int subjectId)
+        {
+            var subject = new Subject();
+
+            if (DBConnector is not null && DBConnector.subject is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.subject.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+
+                    Parallel.ForEach(requst, (item, state) =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.ID == subjectId)
+                            {
+                                lock (subject)
+                                {
+                                    subject = item;
+                                }
+
+                                state.Break();
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return subject;
+        }
+
         #endregion student
 
 
@@ -228,97 +451,6 @@ namespace FourthTask.Models
             }
 
             return false;
-        }
-
-
-        public async Task<List<Subject>> GetSubjects()
-        {
-            var subjects = new List<Subject>();
-
-            if (DBConnector is not null && DBConnector.subject is not null)
-            {
-                var requst = await DBConnector.subject.GetItemsAsync();
-
-                if (requst is not null)
-                {
-                    List<Task> tasks = new List<Task>();
-                    Parallel.ForEach(requst, item =>
-                    {
-                        var task = Task.Run(() => subjects.Add(item));
-
-                        tasks.Add(task);
-                    });
-
-                    // Выполнение всех тасков
-                    Task.WaitAll(tasks.ToArray());
-                }
-            }
-
-            return subjects;
-        }
-
-
-        public async Task<List<Student>> GetStudentsGroupmates()
-        {
-            var groupmates = new List<Student>();
-
-            if (DBConnector is not null && DBConnector.student is not null && sessionUser is not null && currStudent is not null)
-            {
-                var requst = await DBConnector.student.GetItemsAsync();
-
-                if (requst is not null)
-                {
-                    List<Task> tasks = new List<Task>();
-                    Parallel.ForEach(requst, item =>
-                    {
-                        var task = Task.Run(() => {
-                            if (item.GroupID == currStudent?.GroupID)
-                            {
-                                groupmates.Add(item);
-                            }
-                        });
-
-                        tasks.Add(task);
-                    });
-
-                    // Выполнение всех тасков
-                    Task.WaitAll(tasks.ToArray());
-                }
-            }
-
-            return groupmates;
-        }
-
-
-        public async Task<List<Exam>> GetExams()
-        {
-            var exams = new List<Exam>();
-
-            if (DBConnector is not null && DBConnector.exam is not null && sessionUser is not null)
-            {
-                var requst = await DBConnector.exam.GetItemsAsync();
-
-                if (requst is not null)
-                {
-                    List<Task> tasks = new List<Task>();
-                    Parallel.ForEach(requst, item =>
-                    {
-                        var task = Task.Run(() => {
-                            if (item.GroupID == currStudent?.GroupID)
-                            {
-                                exams.Add(item);
-                            }
-                        });
-
-                        tasks.Add(task);
-                    });
-
-                    // Выполнение всех тасков
-                    Task.WaitAll(tasks.ToArray());
-                }
-            }
-
-            return exams;
         }
 
 
