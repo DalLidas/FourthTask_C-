@@ -62,7 +62,7 @@ namespace FourthTask.ViewModels
                 }
             }
 
-            Ioc.StudentNavigationService.NavigateToStudentsGroupmatesPage();
+            Ioc.StudentNavigationService?.NavigateToStudentsGroupmatesPage();
         }
         #endregion Команда показа студентов моей группы
 
