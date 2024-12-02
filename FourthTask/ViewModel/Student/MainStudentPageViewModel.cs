@@ -61,7 +61,7 @@ namespace FourthTask.ViewModels
         #endregion Команда показа экзаменов
 
 
-        #region Команда показа экзаменов
+        #region Команда показа пре
         public ICommand ShowDeanWorkmanCommand { get; }
         private bool CanShowDeanWorkmanCommandExecute(object parameter) => true;
         private void OnShowDeanWorkmanCommandExecute(object parameter)
