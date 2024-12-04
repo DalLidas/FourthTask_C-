@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using FourthTask.PageNavigation.Base;
 using FourthTask.Pages.StudentPages;
+using FourthTask.Pages.TeacherPages;
 
 namespace FourthTask.PageNavigation
 {
@@ -35,7 +36,7 @@ namespace FourthTask.PageNavigation
 
         public void NavigateToMainTeacherPage()
         {
-            _frame.Navigate(new MainTeacherPage());
+            _frame.Navigate(new TeacherMainPage());
         }
 
         public void NavigateToMainDeanWorkmanPage()
@@ -71,6 +72,20 @@ namespace FourthTask.PageNavigation
         public void NavigateToStudentExamsPage()
         {
             _frame.Navigate(new StudentsExamsPage());
+        }
+    }
+
+    class TeacherNavigationService : TeacherNavigationServiceBase
+    {
+        private readonly Frame _frame;
+        public TeacherNavigationService(Frame frame)
+        {
+            _frame = frame;
+        }
+
+        public void NavigateToTeacherGroupsPage()
+        {
+            _frame.Navigate(new TeacherGroupsPage());
         }
     }
 }

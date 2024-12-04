@@ -24,7 +24,7 @@ namespace FourthTask.Pages.StudentPages
         {
             if (Ioc.model is not null)
             {
-                List<Student> buffStudent = await Ioc.model.GetStudentsGroupmates();
+                List<Student> buffStudent = await Ioc.model.GetStudentStudentsGroupmates();
                 if (buffStudent is not null)
                 {
                     groupmates.Clear();

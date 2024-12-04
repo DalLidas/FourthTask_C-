@@ -5,10 +5,9 @@ using FourthTask.DataBase;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace FourthTask.ViewModels
 {
-    class StudentTeachersVM: ViewModelBase
+    internal class TeacherGroupsVM : ViewModelBase
     {
         public struct TeacherView
         {
@@ -19,7 +18,7 @@ namespace FourthTask.ViewModels
             public string? Merit { get; set; }
             public int? Internship { get; set; }
 
-            public TeacherView(string? fullName, string? birth, string? job,  string? subject, string? Merit, int? Internship)
+            public TeacherView(string? fullName, string? birth, string? job, string? subject, string? Merit, int? Internship)
             {
                 this.fullName = fullName;
                 this.birth = birth;
@@ -33,7 +32,7 @@ namespace FourthTask.ViewModels
 
         public ObservableCollection<TeacherView> Teachers { get; set; }
 
-        public StudentTeachersVM()
+        public TeacherGroupsVM()
         {
             Teachers = new ObservableCollection<TeacherView>();
 

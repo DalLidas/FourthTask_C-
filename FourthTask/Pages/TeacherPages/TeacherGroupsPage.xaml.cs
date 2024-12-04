@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FourthTask
+namespace FourthTask.Pages.TeacherPages
 {
     /// <summary>
-    /// Логика взаимодействия для MainPage.xaml
+    /// Логика взаимодействия для TeacherGroupsPage.xaml
     /// </summary>
-    public partial class MainPage : Page
+    public partial class TeacherGroupsPage : Page
     {
-        public MainPage()
+        public TeacherGroupsPage()
         {
             InitializeComponent();
         }

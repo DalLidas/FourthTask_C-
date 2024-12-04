@@ -26,6 +26,11 @@ namespace FourthTask.PageNavigation.Ioc
             get { return _studentContainer?.Resolve<StudentNavigationServiceBase>(); }
         }
 
+        public static StudentNavigationServiceBase? TeacherNavigationService
+        {
+            get { return _teacherContainer?.Resolve<StudentNavigationServiceBase>(); }
+        }
+
         public static void InitPages(Frame frame)
         {
             var builder = new ContainerBuilder();
@@ -56,7 +61,7 @@ namespace FourthTask.PageNavigation.Ioc
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainNavigationService>()
+            builder.RegisterType<TeacherNavigationService>()
                 .As<TeacherNavigationServiceBase>()
                 .SingleInstance()
                 .WithParameter(new TypedParameter(typeof(Frame), frame));

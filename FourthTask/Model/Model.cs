@@ -89,6 +89,11 @@ namespace FourthTask.Models
         #endregion deanWorkman
 
         #region teacher
+        public Staff? GetCurrentStaff()
+        {
+            return this.currStaff;
+        }
+
         #endregion teacher
 
         #region students
@@ -99,7 +104,7 @@ namespace FourthTask.Models
         }
         
            
-        public async Task<List<Subject>> GetSubjects()
+        public async Task<List<Subject>> GetStudentSubjects()
         {
             var subjects = new List<Subject>();
 
@@ -133,7 +138,7 @@ namespace FourthTask.Models
         }
 
 
-        public async Task<List<Student>> GetStudentsGroupmates()
+        public async Task<List<Student>> GetStudentStudentsGroupmates()
         {
             var groupmates = new List<Student>();
 
@@ -168,7 +173,7 @@ namespace FourthTask.Models
         }
 
 
-        public async Task<List<Exam>> GetExams()
+        public async Task<List<Exam>> GetStudentExams()
         {
             var exams = new List<Exam>();
 
@@ -204,7 +209,7 @@ namespace FourthTask.Models
 
 
         // Получение специализации по Id
-        public async Task<Specialization> GetSpecialization(int specializationId)
+        public async Task<Specialization> GetStudentSpecialization(int specializationId)
         {
             var specialization = new Specialization();
 
@@ -244,7 +249,7 @@ namespace FourthTask.Models
 
 
         // Получение группы по Id
-        public async Task<Group> GetGroup(int groupId)
+        public async Task<Group> GetStudentGroup(int groupId)
         {
             var group = new Group();
 
@@ -283,7 +288,7 @@ namespace FourthTask.Models
         }
 
         // Получение группы по Id
-        public Group GetGroupSync(int groupId)
+        public Group GetStudentGroupSync(int groupId)
         {
             var group = new Group();
 
@@ -323,7 +328,7 @@ namespace FourthTask.Models
 
 
         //Получение преподавателя по Id
-        public async Task<Staff> GetTeacher(int teacherId)
+        public async Task<Staff> GetStudentTeacher(int teacherId)
         {
             var teacher = new Staff();
 
@@ -364,7 +369,7 @@ namespace FourthTask.Models
 
 
         //Получение предмета по Id
-        public async Task<Subject> GetSubject(int subjectId)
+        public async Task<Subject> GetStudentSubject(int subjectId)
         {
             var subject = new Subject();
 
@@ -405,7 +410,7 @@ namespace FourthTask.Models
 
 
         //Получение предмета по Id
-        public async Task<Journal> GetGrade(int examtId)
+        public async Task<Journal> GetStudentGrade(int examtId)
         {
             var journal = new Journal();
 

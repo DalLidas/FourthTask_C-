@@ -44,7 +44,7 @@ namespace FourthTask.ViewModels
         {
             if (Ioc.model is not null)
             {
-                List<Exam> buffExams = await Ioc.model.GetExams();
+                List<Exam> buffExams = await Ioc.model.GetStudentExams();
 
                 if (buffExams is not null)
                 {
@@ -55,14 +55,14 @@ namespace FourthTask.ViewModels
                         if (exam is null) continue;
                         if (exam.SpecializationID is null) continue;
 
-                        var buffSpecialization = await Ioc.model.GetSpecialization(exam.SpecializationID ?? -1) ?? null;
+                        var buffSpecialization = await Ioc.model.GetStudentSpecialization(exam.SpecializationID ?? -1) ?? null;
 
                         if (buffSpecialization is null) continue;
 
-                        var buffTeacher = await Ioc.model.GetTeacher(buffSpecialization.TeacherID ?? -1) ?? null;
-                        var buffsubject = await Ioc.model.GetSubject(buffSpecialization.SubjectID ?? -1) ?? null;
+                        var buffTeacher = await Ioc.model.GetStudentTeacher(buffSpecialization.TeacherID ?? -1) ?? null;
+                        var buffsubject = await Ioc.model.GetStudentSubject(buffSpecialization.SubjectID ?? -1) ?? null;
 
-                        var buffJornal = await Ioc.model.GetGrade(exam.ID);
+                        var buffJornal = await Ioc.model.GetStudentGrade(exam.ID);
 
                         string grade = "";
 

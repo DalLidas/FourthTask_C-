@@ -32,7 +32,10 @@ namespace FourthTask.PageNavigation.Base
     }
 
 
-    public interface TeacherNavigationServiceBase;
+    public interface TeacherNavigationServiceBase
+    {
+        public void NavigateToTeacherGroupsPage();
+    }
     public interface DeanWorkmanNavigationServiceBase;
     public interface AdminNavigationServiceBase;
 

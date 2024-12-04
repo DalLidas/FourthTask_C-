@@ -21,11 +21,10 @@ namespace FourthTask.ViewModels
             ExitUserCommand = new LambdaCommand(OnExitUserCommandExecute, CanExitUserCommandExecute);
         }
 
-
         private void init()
         {
             Student? currStudent = Ioc.model?.GetCurrentStudent();
-            var buffGroup = Ioc.model?.GetGroupSync(currStudent?.GroupID ?? 0);
+            var buffGroup = Ioc.model?.GetStudentGroupSync(currStudent?.GroupID ?? 0);
 
             _StudentName = currStudent?.FullName ?? "";
 
@@ -34,7 +33,7 @@ namespace FourthTask.ViewModels
             _StudentSpecializationName = buffGroup?.Name ?? "";
         }
 
-
+        
         #region Команды
 
         #region Команда показа студентов моей группы
@@ -65,7 +64,6 @@ namespace FourthTask.ViewModels
             Ioc.StudentNavigationService?.NavigateToStudentExamsPage();
         }
         #endregion Команда показа экзаменов
-
 
 
         #region Команда выхода из учётной записи
