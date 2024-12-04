@@ -20,11 +20,26 @@ namespace FourthTask.ViewModels
     {
         public MainStudentPageViewModel()
         {
+            init();
+
             ShowStudentGroupmatesCommand = new LambdaCommand(OnShowStudentGroupmatesCommandExecute, CanShowStudentGroupmatesCommandExecute);
             ShowStudentTeachersCommand = new LambdaCommand(OnShowStudentTeachersCommandExecute, CanShowStudentTeachersCommandExecute);
             ShowStudentExamsCommand = new LambdaCommand(OnShowStudentExamsCommandExecute, CanShowStudentExamsCommandExecute);
 
             ExitUserCommand = new LambdaCommand(OnExitUserCommandExecute, CanExitUserCommandExecute);
+        }
+
+
+        private async void init()
+        {
+            Student? currStudent = Ioc.model?.GetCurrentStudent();
+            _StudentName = currStudent?.FullName ?? "";
+            _StudentGroup = currStudent?.GroupID.ToString() ?? "";
+
+            //var buffGroup = await Ioc.model?.GetGroup(currStudent?.GroupID ?? 0);
+
+            //_StudentFaculty = buffGroup?.Faculty ?? "";
+            //_StudentSpecializationName = buffGroup?.Name ?? "";
         }
 
 
@@ -75,6 +90,8 @@ namespace FourthTask.ViewModels
         #endregion Команды
 
 
+
+
         #region Поля
 
         private string _Title = "Технологический ВУЗ \"Сессия\"";
@@ -83,6 +100,34 @@ namespace FourthTask.ViewModels
             get => _Title;
             set => Set(ref _Title, value);
         }
+        
+         private string _StudentName = "";
+        public string StudentName
+        {
+            get => _StudentName;
+            set => Set(ref _StudentName, value);
+        }
+
+        private string _StudentGroup = "";
+        public string StudentGroup
+        {
+            get => _StudentGroup;
+            set => Set(ref _StudentGroup, value);
+        }
+
+        //private string _StudentFaculty = "";
+        //public string StudentFaculty
+        //{
+        //    get => _StudentFaculty;
+        //    set => Set(ref _StudentFaculty, value);
+        //}
+
+        //private string _StudentSpecializationName = "";
+        //public string StudentSpecializationName
+        //{
+        //    get => _StudentSpecializationName;
+        //    set => Set(ref _StudentSpecializationName, value);
+        //}
 
         #endregion Поля
     }

@@ -11,7 +11,7 @@
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
          xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-         Title="StudentsTeacherPage" Width="auto" Height="auto" MinHeight="300" MinWidth="300"
+         Title="{Binding Title}" Width="auto" Height="auto" MinHeight="300" MinWidth="300"
          TextElement.Foreground="{DynamicResource MaterialDesignBody}"
          TextElement.FontWeight="Regular"
          TextElement.FontSize="13"

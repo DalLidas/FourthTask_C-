@@ -66,9 +66,9 @@ namespace FourthTask.ViewModels
                         var buffsubject = await Ioc.model.GetSubject(buffSpecialization.SubjectID ?? -1) ?? null;
 
                         if (buffTeacher?.ID is null) continue;
-                        if (uniqueTeachers.Contains(buffTeacher?.ID ?? 0)) continue;
+                        if (uniqueTeachers.Contains(buffTeacher?.ID ?? -1)) continue;
 
-                        uniqueTeachers.Add(buffTeacher.ID);
+                        uniqueTeachers.Add(buffTeacher?.ID ?? -1);
                         Teachers.Add(new TeacherView(
                                  buffTeacher?.FullName ?? "",
                                  buffTeacher?.Birth ?? "",
@@ -80,6 +80,14 @@ namespace FourthTask.ViewModels
                     }
                 }
             }
+        }
+
+
+        private string _Title = "Технологический ВУЗ \"Сессия\"";
+        public string Title
+        {
+            get => _Title;
+            set => Set(ref _Title, value);
         }
 
 

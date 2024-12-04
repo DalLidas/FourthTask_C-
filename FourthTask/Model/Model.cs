@@ -91,9 +91,14 @@ namespace FourthTask.Models
         #region teacher
         #endregion teacher
 
-        #region student
+        #region students
 
-
+        public Student? GetCurrentStudent()
+        {
+            return this.currStudent;
+        }
+        
+           
         public async Task<List<Subject>> GetSubjects()
         {
             var subjects = new List<Subject>();

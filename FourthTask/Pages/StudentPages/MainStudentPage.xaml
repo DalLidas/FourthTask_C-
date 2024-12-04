@@ -10,7 +10,7 @@
       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="RoatManager" Width="auto" Height="auto" MinHeight="550" MinWidth="500"
+      Title="{Binding Title}" Width="auto" Height="auto" MinHeight="550" MinWidth="500"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       TextElement.FontWeight="Regular"
       TextElement.FontSize="13"
@@ -47,7 +47,7 @@
                         </Ellipse.Fill>
                     </Ellipse>
                 </Border>
-                <TextBlock FontSize="20" HorizontalAlignment="Center" Margin="20 0 5 20"><Run Language="ru-ru" Foreground="White" Text="Cтудент"/></TextBlock>
+                <TextBlock FontSize="15" HorizontalAlignment="Center" Margin="20 0 5 20"><Run Language="ru-ru" Foreground="White" Text="{Binding StudentName}"/></TextBlock>
             </DockPanel>
         </Border>
 
@@ -75,12 +75,18 @@
             Name="_mainStudentPageFrame" 
             NavigationUIVisibility="Hidden"/>
 
+
+        <TextBlock  FontSize="15" TextWrapping="Wrap" Margin="10,129,10,400"><Run Language="ru-ru" Foreground="White" Text="Группа: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentGroup}" /></TextBlock>
+        <!--<TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,150,10,382"><Run Language="ru-ru" Foreground="White" Text="Факультет: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentFaculty}" /></TextBlock>
+        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,168,10,329"><Run Language="ru-ru" Foreground="White" Text="Направление: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentSpecializationName}" /></TextBlock>-->
+
         <!--Для студентов-->
-        <Button Command="{Binding ShowStudentGroupmatesCommand}" Margin="0,170,0,347" Content="Моя группа" />
-        <Button Command="{Binding ShowStudentTeachersCommand}" Margin="0,210,0,306" Content="Мои преподаватели" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,250,0,266" Content="Мои экзамены" />
+        <Button Command="{Binding ShowStudentGroupmatesCommand}" Margin="0,226,0,292" Content="Моя группа" />
+        <Button Command="{Binding ShowStudentTeachersCommand}" Margin="0,263,0,255" Content="Мои преподаватели" />
+        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,300,0,218" Content="Мои экзамены" />
 
         <Button Command="{Binding ExitUserCommand}" Margin="0,483,0,35" Content="Выход из учётной записи" />
+
 
     </Grid>
 </Page>
