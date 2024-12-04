@@ -6,12 +6,12 @@ using FourthTask.DataBase;
 
 namespace FourthTask.ViewModels
 {
-    internal class GroupmatesVM : ViewModelBase
+    internal class StudentGroupmatesVM : ViewModelBase
     {
 
         public ObservableCollection<Student> Groupmates { get; set; }
 
-        public GroupmatesVM()
+        public StudentGroupmatesVM()
         {
             Groupmates = new ObservableCollection<Student>();
 

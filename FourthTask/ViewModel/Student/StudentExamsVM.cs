@@ -2,6 +2,8 @@
 using FourthTask.ViewModels.Base;
 using System.Collections.ObjectModel;
 using FourthTask.DataBase;
+using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace FourthTask.ViewModels
@@ -10,20 +12,18 @@ namespace FourthTask.ViewModels
     {
         public struct ExamView
         {
-            int? examId { get; set; }
-            string? examDate { get; set; }
-            string? ratingMethod { get; set; }
-            int? groupNumber { get; set; }
-            string? groupName { get; set; }
-            string? teacherName { get; set; }
+            public int? examId { get; set; }
+            public string? examDate { get; set; }
+            public string? ratingMethod { get; set; }
+            public string? subjectName { get; set; }
+            public string? teacherName { get; set; }
 
-            public ExamView(int? examId, string? examDate, string? ratingMethod, int? groupNumber, string? groupName, string? teacherName)
+            public ExamView(int? examId, string? examDate, string? ratingMethod, string? subjectName, string? teacherName)
             {
                 this.examId = examId;
                 this.examDate = examDate;
                 this.ratingMethod = ratingMethod;
-                this.groupNumber = groupNumber;
-                this.groupName = groupName;
+                this.subjectName = subjectName;
                 this.teacherName = teacherName;
             }
         }
@@ -49,39 +49,75 @@ namespace FourthTask.ViewModels
                 {
                     Exams.Clear();
 
-                    List<Task> tasks = new List<Task>();
-                    Parallel.ForEach(buffExams, exam =>
+                    foreach (Exam exam in buffExams.OrderBy(x => x.ID))
                     {
-                        var task = Task.Run(async () =>
-                        {
+                        if (exam is null) continue;
+                        if (exam.SpecializationID is null) continue;
 
-                            if (exam is null) return;
-                            if (exam.SpecializationID is null) return;
+                        var buffSpecialization = await Ioc.model.GetSpecialization(exam.SpecializationID ?? -1) ?? null;
 
-                            var buffGroup = await Ioc.model.GetSubject(exam.GroupID ?? -1);
+                        if (buffSpecialization is null) continue;
 
-                            var buffSpecialization = await Ioc.model.GetSpecialization(exam.SpecializationID ?? -1);
+                        var buffTeacher = await Ioc.model.GetTeacher(buffSpecialization.TeacherID ?? -1) ?? null;
+                        var buffsubject = await Ioc.model.GetSubject(buffSpecialization.SubjectID ?? -1) ?? null;
 
-                            var buffTeacher = await Ioc.model.GetSubject(buffSpecialization.TeacherID ?? -1);
 
-                            lock (Exams)
-                            {
-                                Exams.Add(new ExamView(
-                                    exam.ID,
-                                    exam.Date,
-                                    exam.RatingMethod,
-                                    exam.GroupID,
-                                    buffGroup.Name,
-                                    buffTeacher.Name
-                                    ));
-                            }
-                        });
+                        Exams.Add(new ExamView(
+                                 exam.ID,
+                                 exam.Date,
+                                 exam.RatingMethod,
+                                 buffsubject?.Name ?? "",
+                                 buffTeacher?.FullName ?? ""
+                                 ));
+                    }
 
-                        tasks.Add(task);
-                    });
+
+                    //SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+                    //List<Task> tasks = new List<Task>();
+
+                    //foreach (var exam in buffExams)
+                    //{
+                    //    var task = Task.Run(async () =>
+                    //    {
+                    //        if (exam is null) return;
+                    //        if (exam.SpecializationID is null) return;
+
+                    //        var buffGroup = await Ioc.model.GetGroup(exam.GroupID ?? -1);
+
+                    //        var buffSpecialization = await Ioc.model.GetSpecialization(exam.SpecializationID ?? -1) ;
+
+                    //        if (buffSpecialization is null) return;
+
+                    //        var buffTeacher = await Ioc.model.GetTeacher(buffSpecialization.TeacherID ?? -1) ;
+                    //        var buffsubject = await Ioc.model.GetSubject(buffSpecialization.SubjectID ?? -1) ;
+
+                    //        await semaphore.WaitAsync();
+                    //        try
+                    //        {
+                    //            Exams.Add(new ExamView(
+                    //                exam.ID,
+                    //                exam.Date,
+                    //                exam.RatingMethod,
+                    //                exam.GroupID,
+                    //                //"buffGroup",
+                    //                //"buffsubject",
+                    //                //"buffTeacher"
+                    //                buffGroup.Name,
+                    //                buffsubject?.Name ?? "",
+                    //                buffTeacher?.FullName ?? ""
+                    //                ));
+                    //        }
+                    //        finally
+                    //        {
+                    //            semaphore.Release();
+                    //        }
+                    //    });
+
+                    //    tasks.Add(task);
+                    //}
 
                     // Выполнение всех тасков
-                    Task.WaitAll(tasks.ToArray());
+                    //await Task.WhenAll(tasks.ToArray());
                 }
             }
         }

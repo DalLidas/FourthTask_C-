@@ -62,7 +62,7 @@ namespace FourthTask.ViewModels
                 }
             }
 
-            Ioc.StudentNavigationService?.NavigateToStudentsGroupmatesPage();
+            Ioc.StudentNavigationService?.NavigateToStudentGroupmatesPage();
         }
         #endregion Команда показа студентов моей группы
 
@@ -90,8 +90,6 @@ namespace FourthTask.ViewModels
             get => _Title;
             set => Set(ref _Title, value);
         }
-
-
 
         #endregion Поля
     }

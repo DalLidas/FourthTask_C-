@@ -20,10 +20,9 @@ namespace FourthTask.ViewModels
     {
         public MainStudentPageViewModel()
         {
-            ShowStudentMyGroupCommand = new LambdaCommand(OnShowStudentMyGroupCommandExecute, CanShowStudentMyGroupCommandExecute);
-            ShowStudentsSubjectsCommand = new LambdaCommand(OnShowStudentsSubjectsCommandExecute, CanShowStudentsSubjectsCommandExecute);
+            ShowStudentGroupmatesCommand = new LambdaCommand(OnShowStudentGroupmatesCommandExecute, CanShowStudentGroupmatesCommandExecute);
+            ShowStudentTeachersCommand = new LambdaCommand(OnShowStudentTeachersCommandExecute, CanShowStudentTeachersCommandExecute);
             ShowStudentExamsCommand = new LambdaCommand(OnShowStudentExamsCommandExecute, CanShowStudentExamsCommandExecute);
-            ShowDeanWorkmanCommand = new LambdaCommand(OnShowDeanWorkmanCommandExecute, CanShowDeanWorkmanCommandExecute);
 
             ExitUserCommand = new LambdaCommand(OnExitUserCommandExecute, CanExitUserCommandExecute);
         }
@@ -32,21 +31,21 @@ namespace FourthTask.ViewModels
         #region Команды
 
         #region Команда показа студентов моей группы
-        public ICommand ShowStudentMyGroupCommand { get; }
-        private bool CanShowStudentMyGroupCommandExecute(object parameter) => true;
-        private void OnShowStudentMyGroupCommandExecute(object parameter)
+        public ICommand ShowStudentGroupmatesCommand { get; }
+        private bool CanShowStudentGroupmatesCommandExecute(object parameter) => true;
+        private void OnShowStudentGroupmatesCommandExecute(object parameter)
         {
-            Ioc.StudentNavigationService?.NavigateToStudentsGroupmatesPage();
+            Ioc.StudentNavigationService?.NavigateToStudentGroupmatesPage();
         }
         #endregion Команда показа студентов моей группы
 
 
-        #region Команда показа предметов
-        public ICommand ShowStudentsSubjectsCommand { get; }
-        private bool CanShowStudentsSubjectsCommandExecute(object parameter) => true;
-        private void OnShowStudentsSubjectsCommandExecute(object parameter)
+        #region Команда показа преподавателей
+        public ICommand ShowStudentTeachersCommand { get; }
+        private bool CanShowStudentTeachersCommandExecute(object parameter) => true;
+        private void OnShowStudentTeachersCommandExecute(object parameter)
         {
-            Ioc.StudentNavigationService?.NavigateToStudentsSubjectsPage();
+            Ioc.StudentNavigationService?.NavigateToStudentTeachersPage();
         }
         #endregion Команда показа предметов
 
@@ -56,19 +55,10 @@ namespace FourthTask.ViewModels
         private bool CanShowStudentExamsCommandExecute(object parameter) => true;
         private void OnShowStudentExamsCommandExecute(object parameter)
         {
-            Ioc.StudentNavigationService?.NavigateToStudentsExamsPage();
+            Ioc.StudentNavigationService?.NavigateToStudentExamsPage();
         }
         #endregion Команда показа экзаменов
 
-
-        #region Команда показа пре
-        public ICommand ShowDeanWorkmanCommand { get; }
-        private bool CanShowDeanWorkmanCommandExecute(object parameter) => true;
-        private void OnShowDeanWorkmanCommandExecute(object parameter)
-        {
-            Ioc.StudentNavigationService?.NavigateToDeanWorkmanPage();
-        }
-        #endregion Команда показа экзаменов
 
 
         #region Команда выхода из учётной записи

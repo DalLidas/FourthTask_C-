@@ -75,7 +75,9 @@ namespace FourthTask.Models
             sessionStartedFlag = false;
             sessionPrivilages = Privilages.None;
 
+#pragma warning disable CS0162 // Обнаружен недостижимый код
             if (DEBUG_MOD) MessageBox.Show($"Создался контейнер для базы данных");
+#pragma warning restore CS0162 // Обнаружен недостижимый код
             return DBConnector is not null;
         }
 
@@ -211,11 +213,13 @@ namespace FourthTask.Models
                     Parallel.ForEach(requst, (item, state) =>
                     {
                         var task = Task.Run(() => {
-                            if (item.ID == currStudent?.GroupID)
+                            if (item.ID == specializationId)
                             {
                                 lock (specialization)
                                 {
+#pragma warning disable CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
                                     specialization = item;
+#pragma warning restore CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
                                 }
 
                                 state.Break();
@@ -231,6 +235,46 @@ namespace FourthTask.Models
             }
 
             return specialization;
+        }
+
+
+        // Получение группы по Id
+        public async Task<Group> GetGroup(int groupId)
+        {
+            var group = new Group();
+
+            if (DBConnector is not null && DBConnector.group is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.group.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, (item, state) =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.ID == groupId)
+                            {
+                                lock (group)
+                                {
+#pragma warning disable CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
+                                    group = item;
+#pragma warning restore CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
+                                }
+
+                                state.Break();
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return group;
         }
 
 
@@ -254,7 +298,9 @@ namespace FourthTask.Models
                             {
                                 lock (teacher)
                                 {
+#pragma warning disable CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
                                     teacher = item;
+#pragma warning restore CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
                                 }
 
                                 state.Break();
@@ -293,7 +339,9 @@ namespace FourthTask.Models
                             {
                                 lock (subject)
                                 {
+#pragma warning disable CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
                                     subject = item;
+#pragma warning restore CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
                                 }
 
                                 state.Break();
@@ -322,7 +370,9 @@ namespace FourthTask.Models
         /// <returns></returns>
         public async Task<bool> StartSession(string login, string password)
         {
+#pragma warning disable CS0162 // Обнаружен недостижимый код
             if (DEBUG_MOD) MessageBox.Show($"Текущий login = {login},  Текущий password = {password}");
+#pragma warning restore CS0162 // Обнаружен недостижимый код
             if (DBConnector is not null && DBConnector.person is not null)
             {
                 var users = await DBConnector.person.GetItemsAsync().ConfigureAwait(false);
@@ -342,7 +392,9 @@ namespace FourthTask.Models
                                 sessionPrivilages = SetPrivilagesLevel(sessionUser?.Privilages ?? "");
 
                                 if (DEBUG_MOD)
+#pragma warning disable CS0162 // Обнаружен недостижимый код
                                     MessageBox.Show($"Добро пожаловать id:{sessionUser?.ID}, Login:{sessionUser?.Login}, Privilages:{sessionUser?.Privilages}");
+#pragma warning restore CS0162 // Обнаружен недостижимый код
 
                                 state.Break();
                             }
@@ -380,7 +432,9 @@ namespace FourthTask.Models
             }
 
 
+#pragma warning disable CS0162 // Обнаружен недостижимый код
             if (DEBUG_MOD) MessageBox.Show($"Конец инициализации базы данных");
+#pragma warning restore CS0162 // Обнаружен недостижимый код
             return sessionStartedFlag;
         }
 

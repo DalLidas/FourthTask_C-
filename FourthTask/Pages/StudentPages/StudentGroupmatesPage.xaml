@@ -20,7 +20,7 @@
          FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
-        <vm:GroupmatesVM/>
+        <vm:StudentGroupmatesVM/>
     </Page.DataContext>
 
     <Grid >
@@ -31,7 +31,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <DataGrid ItemsSource="{Binding Groupmates}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedStudent}" Margin="0,0,0,6" IsReadOnly="True">
+                <DataGrid ItemsSource="{Binding Groupmates}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}" Margin="0,0,0,6" IsReadOnly="True">
                     <DataGrid.Columns >
                         <DataGridTextColumn Binding="{Binding ID}" Header="ID" />
                         <DataGridTextColumn Binding="{Binding FullName}" Header="Фио"/>
@@ -42,7 +42,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <TextBlock Text="{Binding SelectedStudent.ID, StringFormat='Выбранный ID {0}'}" Foreground="White"  Grid.Row="1" />
+                <!--<TextBlock Text="{Binding SelectedItem.ID, StringFormat='Выбранный ID {0}'}" Foreground="White"  Grid.Row="1" />-->
             </Grid>
         </Border>
     </Grid>

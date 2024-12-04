@@ -1,17 +1,17 @@
-﻿<Page x:Class="FourthTask.Pages.StudentPages.StudentsExamsPage"
+﻿<Page x:Class="FourthTask.Pages.StudentPages.StudentsTeacherPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:vm="clr-namespace:FourthTask.ViewModels"
       xmlns:local="clr-namespace:FourthTask.Pages.StudentPages"
-      xmlns:vm="clr-namespace:FourthTask.ViewModels"
       mc:Ignorable="d" 
-      
-       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+      d:DesignHeight="450" d:DesignWidth="800"
+
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
          xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-         Title="RoatManager" Width="auto" Height="auto" MinHeight="300" MinWidth="300"
+         Title="StudentsTeacherPage" Width="auto" Height="auto" MinHeight="300" MinWidth="300"
          TextElement.Foreground="{DynamicResource MaterialDesignBody}"
          TextElement.FontWeight="Regular"
          TextElement.FontSize="13"
@@ -21,7 +21,7 @@
          FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
-        <vm:StudentExamsVM/>
+        <vm:StudentTeachersVM/>
     </Page.DataContext>
 
     <Grid >
@@ -32,21 +32,20 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <DataGrid ItemsSource="{Binding Exams}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedExam}" Margin="0,0,0,6" IsReadOnly="True">
+                <DataGrid ItemsSource="{Binding Teachers}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}" Margin="0,0,0,6" IsReadOnly="True">
                     <DataGrid.Columns >
-                        <DataGridTextColumn Binding="{Binding examId}" Header="ID" />
-                        <DataGridTextColumn Binding="{Binding examDate}" Header="Дата экзамена"/>
-                        <DataGridTextColumn Binding="{Binding ratingMethod}" Header="Метод оценивания"/>
-                        <DataGridTextColumn Binding="{Binding groupNumber}" Header="Номер группы"/>
-                        <DataGridTextColumn Binding="{Binding groupName}" Header="Название группы"/>
-                        <DataGridTextColumn Binding="{Binding teacherName}" Header="Имя учителя"/>
+                        <DataGridTextColumn Binding="{Binding fullName}" Header="Фио" />
+                        <DataGridTextColumn Binding="{Binding birth}" Header="Год рождения"/>
+                        <DataGridTextColumn Binding="{Binding job}" Header="Должность"/>
+                        <DataGridTextColumn Binding="{Binding subject}" Header="Преподоваемый предмет"/>
+                        <DataGridTextColumn Binding="{Binding Merit}" Header="Заслуги"/>
+                        <DataGridTextColumn Binding="{Binding Internship}" Header="Стаж"/>
 
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <TextBlock Text="{Binding SelectedExam.examId, StringFormat='Выбранный ID {0}'}" Foreground="White"  Grid.Row="1" />
+                <!--<TextBlock Text="{Binding SelectedItem.ID, StringFormat='Выбранный ID {0}'}" Foreground="White"  Grid.Row="1" />-->
             </Grid>
         </Border>
     </Grid>
-
 </Page>

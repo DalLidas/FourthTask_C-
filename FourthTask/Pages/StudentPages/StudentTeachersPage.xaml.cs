@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace FourthTask.Pages.StudentPages
 {
     /// <summary>
-    /// Логика взаимодействия для StudentsSubjectsPage.xaml
+    /// Логика взаимодействия для StudentsTeacherPage.xaml
     /// </summary>
-    public partial class StudentsSubjectsPage : Page
+    public partial class StudentsTeacherPage : Page
     {
-        public StudentsSubjectsPage()
+        public StudentsTeacherPage()
         {
             InitializeComponent();
         }

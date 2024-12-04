@@ -58,24 +58,19 @@ namespace FourthTask.PageNavigation
             _frame = frame;
         }
 
-        public void NavigateToStudentsGroupmatesPage()
+        public void NavigateToStudentGroupmatesPage()
         {
             _frame.Navigate(new StudentsGroupmatePage());
         }
 
-        public void NavigateToStudentsSubjectsPage()
+        public void NavigateToStudentTeachersPage()
         {
-            _frame.Navigate(new StudentsSubjectsPage());
+            _frame.Navigate(new StudentsTeacherPage());
         }
 
-        public void NavigateToStudentsExamsPage()
+        public void NavigateToStudentExamsPage()
         {
             _frame.Navigate(new StudentsExamsPage());
-        }
-
-        public void NavigateToDeanWorkmanPage()
-        {
-            _frame.Navigate(new DeanWorkmanPage());
         }
     }
 }

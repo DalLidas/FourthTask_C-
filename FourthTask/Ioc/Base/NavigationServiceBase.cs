@@ -24,13 +24,11 @@ namespace FourthTask.PageNavigation.Base
 
     public interface StudentNavigationServiceBase
     {
-        public void NavigateToStudentsGroupmatesPage();
+        public void NavigateToStudentGroupmatesPage();
 
-        public void NavigateToStudentsSubjectsPage();
+        public void NavigateToStudentTeachersPage();
 
-        public void NavigateToStudentsExamsPage();
-
-        public void NavigateToDeanWorkmanPage();
+        public void NavigateToStudentExamsPage();
     }
 
 
