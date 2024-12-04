@@ -84,6 +84,23 @@ namespace FourthTask.DataBase
         }
 
         /// <summary>
+        /// Получение элемента таблицы синхронно
+        /// </summary>
+        public List<T> GetItemsSync()
+        {
+            try
+            {
+                return database.GetConnection().Table<T>().ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return new List<T>();
+            }
+
+        }
+
+        /// <summary>
         /// Получение элемента таблицы асинхронно
         /// </summary>
         public async Task<T> GetItemAsync(int id)
@@ -97,7 +114,25 @@ namespace FourthTask.DataBase
                 MessageBox.Show(ex.Message);
                 return new T();
             }
-            
+        }
+
+
+
+        /// <summary>
+        /// Получение элемента таблицы синхронно
+        /// </summary>
+        public T GetItemSync(int id)
+        {
+            try
+            {
+                return database.GetConnection().Get<T>(id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return new T();
+            }
+
         }
 
         /// <summary>

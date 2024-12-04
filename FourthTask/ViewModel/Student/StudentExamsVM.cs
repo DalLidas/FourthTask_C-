@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using FourthTask.DataBase;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Printing;
 
 
 namespace FourthTask.ViewModels
@@ -12,18 +13,18 @@ namespace FourthTask.ViewModels
     {
         public struct ExamView
         {
-            public int? examId { get; set; }
+            public string? subjectName { get; set; }
             public string? examDate { get; set; }
             public string? ratingMethod { get; set; }
-            public string? subjectName { get; set; }
+            public string? grade { get; set; }
             public string? teacherName { get; set; }
 
-            public ExamView(int? examId, string? examDate, string? ratingMethod, string? subjectName, string? teacherName)
+            public ExamView(string? subjectName, string? examDate, string? ratingMethod, string? grade, string? teacherName)
             {
-                this.examId = examId;
+                this.subjectName = subjectName;
                 this.examDate = examDate;
                 this.ratingMethod = ratingMethod;
-                this.subjectName = subjectName;
+                this.grade = grade;
                 this.teacherName = teacherName;
             }
         }
@@ -61,12 +62,37 @@ namespace FourthTask.ViewModels
                         var buffTeacher = await Ioc.model.GetTeacher(buffSpecialization.TeacherID ?? -1) ?? null;
                         var buffsubject = await Ioc.model.GetSubject(buffSpecialization.SubjectID ?? -1) ?? null;
 
+                        var buffJornal = await Ioc.model.GetGrade(exam.ID);
+
+                        string grade = "";
+
+                        if (exam.RatingMethod == "Экзамен") grade = buffJornal.Grade.ToString() ?? "";
+                        else if (exam.RatingMethod == "Зачёт")
+                        {
+                            if (buffJornal.Grade == 0)
+                            {
+                                grade = "Не зачёт";
+                            }
+                            else if (buffJornal.Grade == 1)
+                            {
+                                grade = "Зачёт";
+
+                            }
+                            else
+                            {
+                                grade = "";
+                            }
+                        }
+                        else
+                        {
+                            grade = "";
+                        }
 
                         Exams.Add(new ExamView(
-                                 exam.ID,
+                                 buffsubject?.Name ?? "",
                                  exam.Date,
                                  exam.RatingMethod,
-                                 buffsubject?.Name ?? "",
+                                 grade,
                                  buffTeacher?.FullName ?? ""
                                  ));
                     }

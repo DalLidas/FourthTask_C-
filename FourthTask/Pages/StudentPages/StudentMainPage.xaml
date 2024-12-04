@@ -20,7 +20,7 @@
       FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
-        <vm:MainStudentPageViewModel/>
+        <vm:StudentMainPageViewModel/>
     </Page.DataContext>
 
     <Grid>
@@ -76,9 +76,9 @@
             NavigationUIVisibility="Hidden"/>
 
 
-        <TextBlock  FontSize="15" TextWrapping="Wrap" Margin="10,129,10,400"><Run Language="ru-ru" Foreground="White" Text="Группа: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentGroup}" /></TextBlock>
-        <!--<TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,150,10,382"><Run Language="ru-ru" Foreground="White" Text="Факультет: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentFaculty}" /></TextBlock>
-        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,168,10,329"><Run Language="ru-ru" Foreground="White" Text="Направление: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentSpecializationName}" /></TextBlock>-->
+        <TextBlock  FontSize="15" TextWrapping="Wrap" Margin="10,124,10,405"><Run Language="ru-ru" Foreground="White" Text="Группа: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentGroup}" /></TextBlock>
+        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,145,10,387"><Run Language="ru-ru" Foreground="White" Text="Факультет: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentFaculty}" /></TextBlock>
+        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,163,10,334"><Run Language="ru-ru" Foreground="White" Text="Направление: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StudentSpecializationName}" /></TextBlock>
 
         <!--Для студентов-->
         <Button Command="{Binding ShowStudentGroupmatesCommand}" Margin="0,226,0,292" Content="Моя группа" />

@@ -1,24 +1,16 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using FourthTask.PageNavigation.Ioc;
 using FourthTask.ViewModels.Base;
 using FourthTask.ViewModels.Commands;
-using System.IO;
-using System.Collections.ObjectModel;
+
 using FourthTask.DataBase;
-using System.Data.Common;
-using System.Collections.Generic;
-using System.Collections;
-using static MaterialDesignThemes.Wpf.Theme.ToolBar;
-using System;
+
 
 namespace FourthTask.ViewModels
 {
-    internal class MainStudentPageViewModel : ViewModelBase
+    internal class StudentMainPageViewModel : ViewModelBase
     {
-        public MainStudentPageViewModel()
+        public StudentMainPageViewModel()
         {
             init();
 
@@ -30,16 +22,16 @@ namespace FourthTask.ViewModels
         }
 
 
-        private async void init()
+        private void init()
         {
             Student? currStudent = Ioc.model?.GetCurrentStudent();
+            var buffGroup = Ioc.model?.GetGroupSync(currStudent?.GroupID ?? 0);
+
             _StudentName = currStudent?.FullName ?? "";
+
             _StudentGroup = currStudent?.GroupID.ToString() ?? "";
-
-            //var buffGroup = await Ioc.model?.GetGroup(currStudent?.GroupID ?? 0);
-
-            //_StudentFaculty = buffGroup?.Faculty ?? "";
-            //_StudentSpecializationName = buffGroup?.Name ?? "";
+            _StudentFaculty = buffGroup?.Faculty ?? "";
+            _StudentSpecializationName = buffGroup?.Name ?? "";
         }
 
 
@@ -115,19 +107,19 @@ namespace FourthTask.ViewModels
             set => Set(ref _StudentGroup, value);
         }
 
-        //private string _StudentFaculty = "";
-        //public string StudentFaculty
-        //{
-        //    get => _StudentFaculty;
-        //    set => Set(ref _StudentFaculty, value);
-        //}
+        private string _StudentFaculty = "";
+        public string StudentFaculty
+        {
+            get => _StudentFaculty;
+            set => Set(ref _StudentFaculty, value);
+        }
 
-        //private string _StudentSpecializationName = "";
-        //public string StudentSpecializationName
-        //{
-        //    get => _StudentSpecializationName;
-        //    set => Set(ref _StudentSpecializationName, value);
-        //}
+        private string _StudentSpecializationName = "";
+        public string StudentSpecializationName
+        {
+            get => _StudentSpecializationName;
+            set => Set(ref _StudentSpecializationName, value);
+        }
 
         #endregion Поля
     }

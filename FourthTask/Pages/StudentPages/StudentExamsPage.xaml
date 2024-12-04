@@ -33,10 +33,10 @@
 
                 <DataGrid ItemsSource="{Binding Exams}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}" Margin="0,0,0,6" IsReadOnly="True">
                     <DataGrid.Columns >
-                        <DataGridTextColumn Binding="{Binding examId}" Header="ID" />
+                        <DataGridTextColumn Binding="{Binding subjectName}" Header="Предмет"/>
                         <DataGridTextColumn Binding="{Binding examDate}" Header="Дата экзамена"/>
                         <DataGridTextColumn Binding="{Binding ratingMethod}" Header="Метод оценивания"/>
-                        <DataGridTextColumn Binding="{Binding subjectName}" Header="Предмет"/>
+                        <DataGridTextColumn Binding="{Binding grade}" Header="Оценка"/>
                         <DataGridTextColumn Binding="{Binding teacherName}" Header="Имя учителя"/>
                     </DataGrid.Columns>
                 </DataGrid>

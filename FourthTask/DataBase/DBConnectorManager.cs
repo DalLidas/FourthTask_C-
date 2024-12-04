@@ -10,9 +10,6 @@ namespace FourthTask.DataBase.Connector
     /// </summary>
     public class DBConnectorManager
     {
-        public string personeTableName { get; }
-        public string trainRoatTableName { get; }
-
         private readonly SQLiteAsyncConnection? db;
 
         public TableHandleAsync<User>? person;
@@ -27,9 +24,6 @@ namespace FourthTask.DataBase.Connector
 
         public DBConnectorManager(string dbPath)
         {
-            personeTableName = "People";
-            trainRoatTableName = "TrainRoat";
-
             db = new SQLiteAsyncConnection(dbPath);
 
             if (db is not null)

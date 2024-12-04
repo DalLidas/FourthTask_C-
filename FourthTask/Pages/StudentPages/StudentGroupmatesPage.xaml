@@ -37,7 +37,7 @@
                         <DataGridTextColumn Binding="{Binding FullName}" Header="Фио"/>
                         <DataGridTextColumn Binding="{Binding GroupID}" Header="Группа"/>
                         <DataGridTextColumn Binding="{Binding Birth}" Header="Год рождения"/>
-                        <DataGridTextColumn Binding="{Binding AdmissionDate}" Header="Год застсления"/>
+                        <DataGridTextColumn Binding="{Binding AdmissionDate}" Header="Год зачисления"/>
 
                     </DataGrid.Columns>
                 </DataGrid>

@@ -282,6 +282,45 @@ namespace FourthTask.Models
             return group;
         }
 
+        // Получение группы по Id
+        public Group GetGroupSync(int groupId)
+        {
+            var group = new Group();
+
+            if (DBConnector is not null && DBConnector.group is not null && sessionUser is not null)
+            {
+                var requst = DBConnector.group.GetItemsSync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, (item, state) =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.ID == groupId)
+                            {
+                                lock (group)
+                                {
+#pragma warning disable CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
+                                    group = item;
+#pragma warning restore CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
+                                }
+
+                                state.Break();
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return group;
+        }
+
 
         //Получение преподавателя по Id
         public async Task<Staff> GetTeacher(int teacherId)
@@ -362,6 +401,47 @@ namespace FourthTask.Models
             }
 
             return subject;
+        }
+
+
+        //Получение предмета по Id
+        public async Task<Journal> GetGrade(int examtId)
+        {
+            var journal = new Journal();
+
+            if (DBConnector is not null && DBConnector.journal is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.journal.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+
+                    Parallel.ForEach(requst, (item, state) =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.ExamID == examtId)
+                            {
+                                lock (journal)
+                                {
+#pragma warning disable CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
+                                    journal = item;
+#pragma warning restore CS0728 // Возможно, используется недопустимое назначение для локального параметра, который является аргументом оператора using или lock
+                                }
+
+                                state.Break();
+                            }
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return journal;
         }
 
         #endregion student
