@@ -29,7 +29,7 @@ namespace FourthTask.ViewModels
             _StaffJob = currStaff?.Job ?? "";
             _StaffInternship = currStaff?.Internship ?? 0;
         }
-
+         
 
         #region Команды
 
@@ -38,7 +38,7 @@ namespace FourthTask.ViewModels
         private bool CanShowTeacherGroupsCommandExecute(object parameter) => true;
         private void OnShowTeacherGroupsCommandExecute(object parameter)
         {
-            Ioc.StudentNavigationService?.NavigateToStudentGroupmatesPage();
+            Ioc.TeacherNavigationService?.NavigateToTeacherGroupsPage();
         }
         #endregion Команда показа групп со студентами
 

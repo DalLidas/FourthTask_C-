@@ -94,6 +94,55 @@ namespace FourthTask.Models
             return this.currStaff;
         }
 
+
+        // Получение группы преподавателя
+        public async Task<List<Group>> GetTeacherGroups()
+        {
+            var groups = new List<Group>();
+
+
+            if (DBConnector is not null && DBConnector.exam is not null)
+            {
+                var requst = await DBConnector.exam.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(async () => {
+                            if (DBConnector is not null && DBConnector.specialization is not null)
+                            {
+                                var requst = await DBConnector.specialization.GetItemAsync(item.SpecializationID ?? -1);
+
+                                if (requst is not null && requst.TeacherID == currStaff?.ID) 
+                                {
+                                    if (DBConnector is not null && DBConnector.group is not null)
+                                    {
+                                        var groupRequst = await DBConnector.group.GetItemAsync(item.GroupID ?? -1);
+
+                                        lock (groups)
+                                        {
+                                            groups.Add(groupRequst);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        );
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+
+            return groups;
+        }
+
         #endregion teacher
 
         #region students
@@ -589,7 +638,7 @@ namespace FourthTask.Models
                     await DBConnector.person.SaveItemAsync(user);
 
                     //if (DEBUG_MOD) MessageBox.Show($"Создался  Login = {login}, Password = {password}");
-                    MessageBox.Show($"Создался  Login = {login}, Password = {password}");
+                    MessageBox.Show($"Создался Login = {login}, Password = {password}");
                     return true;
                 }
             }

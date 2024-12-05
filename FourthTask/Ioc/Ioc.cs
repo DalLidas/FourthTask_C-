@@ -26,9 +26,9 @@ namespace FourthTask.PageNavigation.Ioc
             get { return _studentContainer?.Resolve<StudentNavigationServiceBase>(); }
         }
 
-        public static StudentNavigationServiceBase? TeacherNavigationService
+        public static TeacherNavigationServiceBase? TeacherNavigationService
         {
-            get { return _teacherContainer?.Resolve<StudentNavigationServiceBase>(); }
+            get { return _teacherContainer?.Resolve<TeacherNavigationServiceBase>(); }
         }
 
         public static void InitPages(Frame frame)

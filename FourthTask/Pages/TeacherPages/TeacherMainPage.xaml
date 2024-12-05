@@ -21,7 +21,7 @@
 
 
     <Page.DataContext>
-        <vm:StudentMainPageViewModel/>
+        <vm:TeacherMainPageVM/>
     </Page.DataContext>
 
     <Grid>
@@ -48,7 +48,7 @@
                         </Ellipse.Fill>
                     </Ellipse>
                 </Border>
-                <TextBlock FontSize="15" HorizontalAlignment="Center" Margin="20 0 5 20"><Run Language="ru-ru" Foreground="White" Text="{Binding StaffName}"/></TextBlock>
+                <TextBlock FontSize="12" HorizontalAlignment="Center" Margin="20 0 5 20"><Run Language="ru-ru" Foreground="White" Text="{Binding StaffName}"/></TextBlock>
             </DockPanel>
         </Border>
 
@@ -79,11 +79,11 @@
         <!--Статика-->
         <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,129,10,400"><Run Language="ru-ru" Foreground="White" Text="День рождения: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffBirth}" /></TextBlock>
         <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,150,10,382"><Run Language="ru-ru" Foreground="White" Text="Должность: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffJob}" /></TextBlock>
-        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,168,10,329"><Run Language="ru-ru" Foreground="White" Text="Заслуги: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffMerit}" /></TextBlock>
-        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,226,10,271"><Run Language="ru-ru" Foreground="White" Text="Стаж: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffInternship}" /></TextBlock>
+        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,189,10,294"><Run Language="ru-ru" Foreground="White" Text="Заслуги: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffMerit}" /></TextBlock>
+        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,168,10,366"><Run Language="ru-ru" Foreground="White" Text="Стаж: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffInternship}" /></TextBlock>
 
         <!--Кнопки-->
-        <Button Command="{Binding ShowTeacherGroupsCommand}" Margin="0,302,0,216" Content="Мои группы" />
+        <Button Command="{Binding ShowTeacherGroupsCommand}" Margin="0,261,0,257" Content="Мои группы" />
         <!--<Button Command="{Binding ShowStudentTeachersCommand}" Margin="0,263,0,255" Content="Мои преподаватели" />
         <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,300,0,218" Content="Мои экзамены" />-->
 
