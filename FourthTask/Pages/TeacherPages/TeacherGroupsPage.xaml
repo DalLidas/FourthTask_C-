@@ -62,12 +62,12 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" VerticalAlignment="Center" Foreground="White">
-                        <Run Text="Выбранный ID: "/><Run Text=" "/><Run Text="{Binding SelectedItem.ID}" />
+                        <Run Text="Выбранная группа: "/><Run Text=" "/><Run Text="{Binding SelectedItem.ID}" />
                     </TextBlock>
 
                     <Button
                         Grid.Column="1"
-                        Command="{Binding ShowTeacherGroupsCommand}"
+                        Command="{Binding TeacherEditGradesCommand}"
                         Content="Выставить оценки" 
                         Background="White" 
                         BorderBrush="White" 

@@ -3,6 +3,8 @@ using FourthTask.ViewModels.Base;
 using System.Collections.ObjectModel;
 using FourthTask.DataBase;
 using System.Linq;
+using System.Windows.Input;
+using FourthTask.ViewModels.Commands;
 
 namespace FourthTask.ViewModels
 {
@@ -14,6 +16,8 @@ namespace FourthTask.ViewModels
         {
             groups = new ObservableCollection<Group>();
 
+            TeacherEditGradesCommand = new LambdaCommand(OnTeacherEditGradesCommandExecute, CanTeacherEditGradesCommandExecute);
+
             GetData();
         }
 
@@ -22,7 +26,6 @@ namespace FourthTask.ViewModels
         {
             if (Ioc.model is not null)
             {
-
                 var buffgroups = await Ioc.model.GetTeacherGroups();
 
                 if (buffgroups is not null)
@@ -42,6 +45,18 @@ namespace FourthTask.ViewModels
             }
         }
 
+        #region Команды
+
+        #region Команда показа студентов моей группы
+        public ICommand TeacherEditGradesCommand { get; }
+        private bool CanTeacherEditGradesCommandExecute(object parameter) => true;
+        private void OnTeacherEditGradesCommandExecute(object parameter)
+        {
+            Ioc.StudentNavigationService?.NavigateToStudentGroupmatesPage();
+        }
+        #endregion Команда показа студентов моей группы
+
+        #endregion Команды
 
         private string _Title = "Технологический ВУЗ \"Сессия\"";
         public string Title
@@ -50,28 +65,12 @@ namespace FourthTask.ViewModels
             set => Set(ref _Title, value);
         }
 
-        private bool _EditButtonIsEnableFlag = false;
-        public bool EditButtonIsEnableFlag
-        {
-            get => _EditButtonIsEnableFlag;
-            set => Set(ref _EditButtonIsEnableFlag, value);
-        }
-
 
         private Group? _SelectedItem;
         public Group? SelectedItem
         {
             get => _SelectedItem;
-            set {
-                if (value != null)
-                {
-                    _EditButtonIsEnableFlag = true;
-                    Set(ref _EditButtonIsEnableFlag, true);
-                }
-                Set(ref _SelectedItem, value);
-            }
-
-
+            set => Set(ref _SelectedItem, value);
         }
     }
 }
