@@ -14,6 +14,8 @@ using FourthTask.DataBase;
 using Newtonsoft.Json.Linq;
 using FourthTask.PageNavigation.Ioc;
 using FourthTask.ViewModels;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
+using static SQLite.SQLite3;
 
 
 namespace FourthTask.Models
@@ -40,6 +42,8 @@ namespace FourthTask.Models
         private User? sessionUser;
         private Student? currStudent;
         private Staff? currStaff;
+
+        private int? teacherSelectedGroup;
 
         private bool sessionStartedFlag;
         private Privilages sessionPrivilages;
@@ -94,6 +98,14 @@ namespace FourthTask.Models
             return this.currStaff;
         }
 
+        public void setTeacherSelectedGroup(int? groupId)
+        {
+            this.teacherSelectedGroup = groupId;
+        }
+        public int? getTeacherSelectedGroup()
+        {
+            return this.teacherSelectedGroup;
+        }
 
         // Получение группы преподавателя
         public async Task<List<Group>> GetTeacherGroups()
@@ -139,8 +151,113 @@ namespace FourthTask.Models
                 }
             }
 
-
             return groups;
+        }
+
+
+
+        // Получение группы преподавателя
+        public async Task<List<Student>> GetTeacherStudents()
+        {
+
+            var students = new List<Student>();
+
+            if (DBConnector is not null && DBConnector.student is not null && sessionUser is not null && teacherSelectedGroup is not null)
+            {
+                var requst = await DBConnector.student.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            if (item.GroupID == teacherSelectedGroup)
+                            {
+                                lock (students)
+                                {
+                                    students.Add(item);
+                                }
+                            }
+                        });
+
+                    tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return students;
+        }
+
+
+        public async Task<List<Exam>> GetTeacherStudentSubjects()
+        {
+            var studentExams = new List<Exam>();
+            var teacherSpecialization = new List<int?>();
+
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.specialization is not null && currStaff is not null)
+                {
+                    var teacherSpecializationRequst = await DBConnector.specialization.GetItemsAsync();
+
+                    if (teacherSpecializationRequst is not null)
+                    {
+                        List<Task> tasks = new List<Task>();
+                        Parallel.ForEach(teacherSpecializationRequst, item =>
+                        {
+                            var task = Task.Run(() => {
+                                if (item.TeacherID == currStaff.ID)
+                                {
+                                    lock (teacherSpecialization)
+                                    {
+                                        teacherSpecialization.Add(item.ID);
+                                    }
+                                }
+                            });
+
+                            tasks.Add(task);
+                        });
+
+                        // Выполнение всех тасков
+                        Task.WaitAll(tasks.ToArray());
+                    }
+                }
+
+                //Запрос на экзамены сдаваемые данному преподавателю
+                if (DBConnector.exam is not null && teacherSelectedGroup is not null)
+                {
+                    var requst = await DBConnector.exam.GetItemsAsync();
+
+                    if (requst is not null)
+                    {
+                        List<Task> tasks = new List<Task>();
+                        Parallel.ForEach(requst, item =>
+                        {
+                            var task = Task.Run(() => {
+                                if (item.GroupID == teacherSelectedGroup && teacherSpecialization.Contains(item.SpecializationID))
+                                {
+                                    lock (studentExams)
+                                    {
+                                        studentExams.Add(item);
+                                    }
+                                }
+                            });
+
+                            tasks.Add(task);
+                        });
+
+                        // Выполнение всех тасков
+                        Task.WaitAll(tasks.ToArray());
+                    }
+                }
+            }
+
+            return studentExams;
         }
 
         #endregion teacher

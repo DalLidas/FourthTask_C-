@@ -33,7 +33,6 @@
 
                 <DataGrid ItemsSource="{Binding Groupmates}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}" Margin="0,0,0,6" IsReadOnly="True">
                     <DataGrid.Columns >
-                        <DataGridTextColumn Binding="{Binding ID}" Header="ID" />
                         <DataGridTextColumn Binding="{Binding FullName}" Header="Фио"/>
                         <DataGridTextColumn Binding="{Binding GroupID}" Header="Группа"/>
                         <DataGridTextColumn Binding="{Binding Birth}" Header="Год рождения"/>

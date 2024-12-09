@@ -87,5 +87,10 @@ namespace FourthTask.PageNavigation
         {
             _frame.Navigate(new TeacherGroupsPage());
         }
+
+        public void NavigateToTeacherGradesPage()
+        {
+            _frame.Navigate(new TeacherGradesPage());
+        }
     }
 }

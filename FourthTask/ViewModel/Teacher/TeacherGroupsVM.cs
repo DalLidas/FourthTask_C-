@@ -52,7 +52,7 @@ namespace FourthTask.ViewModels
         private bool CanTeacherEditGradesCommandExecute(object parameter) => true;
         private void OnTeacherEditGradesCommandExecute(object parameter)
         {
-            Ioc.StudentNavigationService?.NavigateToStudentGroupmatesPage();
+            Ioc.TeacherNavigationService?.NavigateToTeacherGradesPage();
         }
         #endregion Команда показа студентов моей группы
 
@@ -70,7 +70,11 @@ namespace FourthTask.ViewModels
         public Group? SelectedItem
         {
             get => _SelectedItem;
-            set => Set(ref _SelectedItem, value);
+            set
+            {
+                Set(ref _SelectedItem, value);
+                Ioc.model?.setTeacherSelectedGroup(_SelectedItem?.ID);
+            }
         }
     }
 }

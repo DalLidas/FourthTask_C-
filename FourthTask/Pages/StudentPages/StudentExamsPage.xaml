@@ -38,6 +38,7 @@
                         <DataGridTextColumn Binding="{Binding ratingMethod}" Header="Метод оценивания"/>
                         <DataGridTextColumn Binding="{Binding grade}" Header="Оценка"/>
                         <DataGridTextColumn Binding="{Binding teacherName}" Header="Имя учителя"/>
+                        
                     </DataGrid.Columns>
                 </DataGrid>
 
