@@ -17,6 +17,7 @@ namespace FourthTask.ViewModels
         {
             private int? _jornalId;
             private int? _examId;
+            private string? _ratingMethod;
             private string? _subjectName;
             private string? _date;
             private string? _subjectGrade;
@@ -42,6 +43,19 @@ namespace FourthTask.ViewModels
                     {
                         _examId = value;
                         OnPropertyChanged(nameof(ExamId));
+                    }
+                }
+            }
+
+            public string? RatingMethod
+            {
+                get => _ratingMethod;
+                set
+                {
+                    if (_ratingMethod != value)
+                    {
+                        _ratingMethod = value;
+                        OnPropertyChanged(nameof(RatingMethod));
                     }
                 }
             }
@@ -85,10 +99,11 @@ namespace FourthTask.ViewModels
                 }
             }
 
-            public SubjectViewWrapper(int? jornalId, int? examId, string? subjectName, string? date, string? subjectGrade)
+            public SubjectViewWrapper(int? jornalId, int? examId, string? ratingMethod, string? subjectName, string? date, string? subjectGrade)
             {
                 _jornalId = jornalId;
                 _examId = examId;
+                _ratingMethod = ratingMethod;
                 _subjectName = subjectName;
                 _date = date;
                 _subjectGrade = subjectGrade;
@@ -259,6 +274,7 @@ namespace FourthTask.ViewModels
                                 subjects.Add(new SubjectViewWrapper(
                                     buffJornal?.ID ?? 0,
                                     exam?.ID ?? 0,
+                                    exam?.RatingMethod ?? "",
                                     buffsubject?.Name ?? "",
                                     exam?.Date ?? "",
                                     grade ?? ""
@@ -310,7 +326,22 @@ namespace FourthTask.ViewModels
 
                     // Преобразуем строковую оценку в целочисленную
                     int grade;
-                    if (int.TryParse(subject.SubjectGrade, out grade) || subject.SubjectGrade == "Зачёт" || subject.SubjectGrade == "Не зачёт")
+                    if (subject.RatingMethod == "Экзамен")
+                    {
+                        if (int.TryParse(subject.SubjectGrade, out grade))
+                        {
+                            if (grade < 0 || grade > 5)
+                            {
+                                MessageBox.Show($"Оценка по предмету '{subject.SubjectName}' для студента '{student.FullName}' некорректна: '{subject.SubjectGrade}'");
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else if (subject.RatingMethod == "Зачёт") 
                     {
                         if (subject.SubjectGrade == "Зачёт")
                         {
@@ -320,34 +351,43 @@ namespace FourthTask.ViewModels
                         {
                             grade = 0;
                         }
-
-                        // Создаём запись для обновления в журнале
-                        var updatedJournal = new Journal
+                        else
                         {
-                            ID = subject.JornalId ?? 0, // ID журнала
-                            ExamID = subject.ExamId ?? 0, // ID экзамена
-                            StudentID = student.Id ?? 0, // ID студента
-                            Grade = grade // Преобразованная оценка
-                        };
-
-                        try
-                        {
-                            // Вызываем метод для обновления записи в базе данных
-                            await Ioc.model.SetTeacherStudentGrade(updatedJournal);
-
-                            MessageBox.Show($"Оценка по предмету '{subject.SubjectName}' для студента '{student.FullName}' успешно обновлена.");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Ошибка при обновлении оценки по предмету '{subject.SubjectName}' для студента '{student.FullName}': {ex.Message}");
+                            continue;
                         }
                     }
                     else
                     {
                         MessageBox.Show($"Оценка по предмету '{subject.SubjectName}' для студента '{student.FullName}' некорректна: '{subject.SubjectGrade}'");
+                        continue;
                     }
+
+
+                    // Создаём запись для обновления в журнале
+                    var updatedJournal = new Journal
+                    {
+                        ID = subject.JornalId ?? 0, // ID журнала
+                        ExamID = subject.ExamId ?? 0, // ID экзамена
+                        StudentID = student.Id ?? 0, // ID студента
+                        Grade = grade // Преобразованная оценка
+                    };
+
+                    try
+                    {
+                        // Вызываем метод для обновления записи в базе данных
+                        await Ioc.model.SetTeacherStudentGrade(updatedJournal);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при обновлении оценки по предмету '{subject.SubjectName}' для студента '{student.FullName}': {ex.Message}");
+                    }
+
                 }
             }
+
+            MessageBox.Show($"Выставление проведено");
+
+            GetData();
         }
         #endregion Команда показа студентов моей группы
 
@@ -359,17 +399,5 @@ namespace FourthTask.ViewModels
             get => _Title;
             set => Set(ref _Title, value);
         }
-
-
-        //private Group? _SelectedItem;
-        //public Group? SelectedItem
-        //{
-        //    get => _SelectedItem;
-        //    set
-        //    {
-        //        Ioc.model?.setTeacherSelectedGroup(value?.ID);
-        //        Set(ref _SelectedItem, value);
-        //    }
-        //}
     }
 }

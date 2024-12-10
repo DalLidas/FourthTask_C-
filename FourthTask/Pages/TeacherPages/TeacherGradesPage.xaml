@@ -64,8 +64,10 @@
                                                         <TextBlock Text="{Binding SubjectName}" Margin="5,0"/>
                                                         <TextBlock Text=" (" />
                                                         <TextBlock Text="{Binding Date}" />
+                                                        <TextBlock Text=", " />
+                                                        <TextBlock Text="{Binding RatingMethod}" />
                                                         <TextBlock Text="): " />
-                                                        <TextBox Text="{Binding SubjectGrade, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+                                                        <TextBox Text="{Binding SubjectGrade, UpdateSourceTrigger=PropertyChanged}" Width="90"/>
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
