@@ -260,6 +260,21 @@ namespace FourthTask.Models
             return studentExams;
         }
 
+
+        public async Task<int> SetTeacherStudentGrade(Journal journal)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.journal is not null && currStaff is not null && journal is not null)
+                {
+                    return await DBConnector.journal.SaveItemAsync(journal);
+                }
+            }
+
+            return 0;
+        }
+
         #endregion teacher
 
         #region students
@@ -576,7 +591,7 @@ namespace FourthTask.Models
 
 
         //Получение предмета по Id
-        public async Task<Journal> GetStudentGrade(int examtId)
+        public async Task<Journal> GetStudentGrade(int examtId, int currStudentID)
         {
             var journal = new Journal();
 
@@ -591,7 +606,7 @@ namespace FourthTask.Models
                     Parallel.ForEach(requst, (item, state) =>
                     {
                         var task = Task.Run(() => {
-                            if (item.ExamID == examtId)
+                            if (item.ExamID == examtId && item.StudentID == currStudentID)
                             {
                                 lock (journal)
                                 {
@@ -631,7 +646,7 @@ namespace FourthTask.Models
 #pragma warning restore CS0162 // Обнаружен недостижимый код
             if (DBConnector is not null && DBConnector.person is not null)
             {
-                var users = await DBConnector.person.GetItemsAsync().ConfigureAwait(false);
+                var users = await DBConnector.person.GetItemsAsync();
                 List<Task> tasks = new List<Task>();
 
                 if (users is not null)

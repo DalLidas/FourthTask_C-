@@ -62,7 +62,8 @@ namespace FourthTask.ViewModels
                         var buffTeacher = await Ioc.model.GetStudentTeacher(buffSpecialization.TeacherID ?? -1) ?? null;
                         var buffsubject = await Ioc.model.GetStudentSubject(buffSpecialization.SubjectID ?? -1) ?? null;
 
-                        var buffJornal = await Ioc.model.GetStudentGrade(exam.ID);
+
+                        var buffJornal = await Ioc.model.GetStudentGrade(exam.ID, Ioc.model?.GetCurrentStudent()?.ID ?? 0);
 
                         string grade = "";
 

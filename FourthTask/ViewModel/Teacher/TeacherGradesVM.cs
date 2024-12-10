@@ -13,49 +13,187 @@ namespace FourthTask.ViewModels
 {
     class TeacherGradesVM : ViewModelBase
     {
-        public struct SubjectView
+        public class SubjectViewWrapper : INotifyPropertyChanged
         {
-            public int? jornalId { get; set; }
-            public string? subjectName { get; set; }
-            public string? date { get; set; }
-            public string? subjectGrade { get; set; }
+            private int? _jornalId;
+            private int? _examId;
+            private string? _subjectName;
+            private string? _date;
+            private string? _subjectGrade;
 
-            public SubjectView(int? jornalId, string? subjectName, string? date, string? subjectGrade)
+            public int? JornalId
             {
-                this.jornalId = jornalId;
-                this.subjectName = subjectName;
-                this.date = date;
-                this.subjectGrade = subjectGrade;
+                get => _jornalId;
+                set
+                {
+                    if (_jornalId != value)
+                    {
+                        _jornalId = value;
+                        OnPropertyChanged(nameof(JornalId));
+                    }
+                }
             }
+            public int? ExamId
+            {
+                get => _examId;
+                set
+                {
+                    if (_examId != value)
+                    {
+                        _examId = value;
+                        OnPropertyChanged(nameof(ExamId));
+                    }
+                }
+            }
+
+            public string? SubjectName
+            {
+                get => _subjectName;
+                set
+                {
+                    if (_subjectName != value)
+                    {
+                        _subjectName = value;
+                        OnPropertyChanged(nameof(SubjectName));
+                    }
+                }
+            }
+
+            public string? Date
+            {
+                get => _date;
+                set
+                {
+                    if (_date != value)
+                    {
+                        _date = value;
+                        OnPropertyChanged(nameof(Date));
+                    }
+                }
+            }
+
+            public string? SubjectGrade
+            {
+                get => _subjectGrade;
+                set
+                {
+                    if (_subjectGrade != value)
+                    {
+                        _subjectGrade = value;
+                        OnPropertyChanged(nameof(SubjectGrade));
+                    }
+                }
+            }
+
+            public SubjectViewWrapper(int? jornalId, int? examId, string? subjectName, string? date, string? subjectGrade)
+            {
+                _jornalId = jornalId;
+                _examId = examId;
+                _subjectName = subjectName;
+                _date = date;
+                _subjectGrade = subjectGrade;
+            }
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            protected void OnPropertyChanged(string propertyName) =>
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public class StudentGradeViewWrapper : INotifyPropertyChanged
+        {
+            private int? _id;
+            private string? _fullName;
+            private string? _birth;
+            private int? _groupID;
+            private ObservableCollection<SubjectViewWrapper>? _subjects;
+
+            public int? Id
+            {
+                get => _id;
+                set
+                {
+                    if (_id != value)
+                    {
+                        _id = value;
+                        OnPropertyChanged(nameof(Id));
+                    }
+                }
+            }
+
+            public string? FullName
+            {
+                get => _fullName;
+                set
+                {
+                    if (_fullName != value)
+                    {
+                        _fullName = value;
+                        OnPropertyChanged(nameof(FullName));
+                    }
+                }
+            }
+
+            public string? Birth
+            {
+                get => _birth;
+                set
+                {
+                    if (_birth != value)
+                    {
+                        _birth = value;
+                        OnPropertyChanged(nameof(Birth));
+                    }
+                }
+            }
+
+            public int? GroupID
+            {
+                get => _groupID;
+                set
+                {
+                    if (_groupID != value)
+                    {
+                        _groupID = value;
+                        OnPropertyChanged(nameof(GroupID));
+                    }
+                }
+            }
+
+            public ObservableCollection<SubjectViewWrapper>? Subjects
+            {
+                get => _subjects;
+                set
+                {
+                    if (_subjects != value)
+                    {
+                        _subjects = value;
+                        OnPropertyChanged(nameof(Subjects));
+                    }
+                }
+            }
+
+            public StudentGradeViewWrapper(int? id, string? fullName, string? birth, int? groupID, List<SubjectViewWrapper>? subjects)
+            {
+                _id = id;
+                _fullName = fullName;
+                _birth = birth;
+                _groupID = groupID;
+                _subjects = new ObservableCollection<SubjectViewWrapper>(subjects ?? new List<SubjectViewWrapper>());
+            }
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            protected void OnPropertyChanged(string propertyName) =>
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 
-        public struct StudentGradeView
-        {
-            public int? id { get; set; }
-            public string? fullName { get; set; }
-            public string? birth { get; set; }
-            public int? groupID { get; set; }
-            public List<SubjectView?>? subjects { get; set; }
-
-            public StudentGradeView(int? id, string? fullName, string? birth, int? groupID, List<SubjectView?>? subjects)
-            {
-                this.id = id;
-                this.fullName = fullName;
-                this.birth = birth;
-                this.groupID = groupID;
-                this.subjects = subjects;
-            }
-        }
-
-       
-        public ObservableCollection<StudentGradeView> students { get; set; }
-        public ObservableCollection<StudentGradeView> studentsView { get; set; }
+        public ObservableCollection<StudentGradeViewWrapper> students { get; set; }
 
         public TeacherGradesVM()
         {
-            students = new ObservableCollection<StudentGradeView>();
-            studentsView = new ObservableCollection<StudentGradeView>();
+            students = new ObservableCollection<StudentGradeViewWrapper>();
 
             TeacherUpdateGradesCommand = new LambdaCommand(OnTeacherUpdateGradesCommandExecute, CanTeacherUpdateGradesCommandExecute);
 
@@ -76,7 +214,7 @@ namespace FourthTask.ViewModels
 
                     foreach (Student student in buffStudents.OrderBy(x => x.ID))
                     {
-                        var subjects = new List<SubjectView?>();
+                        var subjects = new List<SubjectViewWrapper?>();
 
                         foreach (Exam exam in buffexams.OrderBy(x => x.ID))
                         {
@@ -90,7 +228,7 @@ namespace FourthTask.ViewModels
                             var buffTeacher = await Ioc.model.GetStudentTeacher(buffSpecialization.TeacherID ?? -1) ?? null;
                             var buffsubject = await Ioc.model.GetStudentSubject(buffSpecialization.SubjectID ?? -1) ?? null;
 
-                            var buffJornal = await Ioc.model.GetStudentGrade(exam.ID);
+                            var buffJornal = await Ioc.model.GetStudentGrade(exam.ID, student.ID);
 
                             string grade = "";
 
@@ -118,32 +256,27 @@ namespace FourthTask.ViewModels
 
                             lock (subjects)
                             {
-                                subjects.Add(new SubjectView(
-                                    buffJornal?.ID,
-                                    buffsubject?.Name,
-                                    exam.Date,
-                                    grade
+                                subjects.Add(new SubjectViewWrapper(
+                                    buffJornal?.ID ?? 0,
+                                    exam?.ID ?? 0,
+                                    buffsubject?.Name ?? "",
+                                    exam?.Date ?? "",
+                                    grade ?? ""
                                     ));
                             }
                         }
 
 
-                        if (student is not null)
+                        if (student is not null && subjects is not null)
                         {
-                            students.Add(new StudentGradeView(
+                            students.Add(new StudentGradeViewWrapper(
                                 student.ID,
                                 student.FullName,
                                 student.Birth,
                                 student.GroupID,
-                                subjects.Count != 0 ? subjects : null
+                                subjects
                             ));
                         }
-                    }
-
-                    studentsView.Clear();
-                    for (int i = 0; i < students.Count; ++i)
-                    {
-                        studentsView.Add(students[i]);
                     }
                 }
             }
@@ -154,27 +287,67 @@ namespace FourthTask.ViewModels
         #region Команда показа студентов моей группы
         public ICommand TeacherUpdateGradesCommand { get; }
         private bool CanTeacherUpdateGradesCommandExecute(object parameter) => true;
-        private void OnTeacherUpdateGradesCommandExecute(object parameter)
+        private async void OnTeacherUpdateGradesCommandExecute(object parameter)
         {
-            string str1;
-            string str2;
-
-            str1 = students[0].fullName + ": (";
-            for (int i = 1; i < students[0].subjects.Count; ++i)
+            if (Ioc.model is null)
             {
-                str1 += students[0].subjects[i]?.subjectName + " " + students[0].subjects[i]?.subjectGrade + "\n";
+                MessageBox.Show("Модель данных недоступна.");
+                return;
             }
-            str1 += ")\n";
 
-            str2 = students[0].fullName + ": (";
-            for (int i = 0; i < studentsView[0].subjects.Count; ++i)
+            // Перебираем всех студентов и их оценки для обновления в базе данных
+            foreach (var student in students)
             {
-                str2 += studentsView[0].subjects[i]?.subjectName + " " + studentsView[0].subjects[i]?.subjectGrade + "\n";
+                if (student.Subjects == null || student.Subjects.Count == 0) continue;
+
+                foreach (var subject in student.Subjects)
+                {
+                    if (subject.JornalId == null)
+                    {
+                        MessageBox.Show($"Оценка по предмету '{subject.SubjectName}' отсутствует в журнале.");
+                        continue;
+                    }
+
+                    // Преобразуем строковую оценку в целочисленную
+                    int grade;
+                    if (int.TryParse(subject.SubjectGrade, out grade) || subject.SubjectGrade == "Зачёт" || subject.SubjectGrade == "Не зачёт")
+                    {
+                        if (subject.SubjectGrade == "Зачёт")
+                        {
+                            grade = 1;
+                        }
+                        else if (subject.SubjectGrade == "Не зачёт")
+                        {
+                            grade = 0;
+                        }
+
+                        // Создаём запись для обновления в журнале
+                        var updatedJournal = new Journal
+                        {
+                            ID = subject.JornalId ?? 0, // ID журнала
+                            ExamID = subject.ExamId ?? 0, // ID экзамена
+                            StudentID = student.Id ?? 0, // ID студента
+                            Grade = grade // Преобразованная оценка
+                        };
+
+                        try
+                        {
+                            // Вызываем метод для обновления записи в базе данных
+                            await Ioc.model.SetTeacherStudentGrade(updatedJournal);
+
+                            MessageBox.Show($"Оценка по предмету '{subject.SubjectName}' для студента '{student.FullName}' успешно обновлена.");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка при обновлении оценки по предмету '{subject.SubjectName}' для студента '{student.FullName}': {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Оценка по предмету '{subject.SubjectName}' для студента '{student.FullName}' некорректна: '{subject.SubjectGrade}'");
+                    }
+                }
             }
-            str2 += ")\n";
-
-
-            MessageBox.Show("STR1: "+str1 + "\n\n\n" + "STR2: " + str2 + "\n\n\n");
         }
         #endregion Команда показа студентов моей группы
 

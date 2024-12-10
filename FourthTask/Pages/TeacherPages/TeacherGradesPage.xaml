@@ -46,27 +46,26 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <DataGrid ItemsSource="{Binding studentsView}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}" Margin="0,0,0,6" IsReadOnly="True">
-                        <DataGrid.Columns >
-                            <!--Данные студента-->
-                            <DataGridTextColumn Binding="{Binding fullName}" Header="Фио"/>
-                            <DataGridTextColumn Binding="{Binding groupID}" Header="Группа"/>
-                            <DataGridTextColumn Binding="{Binding birth}" Header="Год рождения"/>
+                    <DataGrid ItemsSource="{Binding students}" AutoGenerateColumns="False" Margin="0 0 0 6" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <!-- Общая информация -->
+                            <DataGridTextColumn Binding="{Binding FullName}" Header="ФИО" />
+                            <DataGridTextColumn Binding="{Binding GroupID}" Header="Группа" />
+                            <DataGridTextColumn Binding="{Binding Birth}" Header="Дата рождения" />
 
-                            <!--Предметы-->
+                            <!-- Предметы -->
                             <DataGridTemplateColumn Header="Предметы">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ItemsControl ItemsSource="{Binding subjects}">
+                                        <ItemsControl ItemsSource="{Binding Subjects}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="{Binding subjectName}" />
-                                                        <TextBlock Text="(" />
-                                                        <TextBlock Text="{Binding date}" />
+                                                        <TextBlock Text="{Binding SubjectName}" Margin="5,0"/>
+                                                        <TextBlock Text=" (" />
+                                                        <TextBlock Text="{Binding Date}" />
                                                         <TextBlock Text="): " />
-                                                        <TextBox Text="{Binding subjectGrade, UpdateSourceTrigger=PropertyChanged}" 
-                                     Margin="5,0" Width="90"/>
+                                                        <TextBox Text="{Binding SubjectGrade, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
@@ -74,7 +73,6 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-
                         </DataGrid.Columns>
                     </DataGrid>
 
