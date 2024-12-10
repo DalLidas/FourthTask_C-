@@ -46,11 +46,12 @@
                     AutoGenerateColumns="False" 
                     CanUserAddRows="False" 
                     SelectedItem="{Binding SelectedItem}"
+                    IsReadOnly="True"
                     Margin="0,0,0,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding ID}" Header="Номер группы" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding Faculty}" Header="Факультет" IsReadOnly="False"/>
-                        <DataGridTextColumn Binding="{Binding Name}" Header="Направление" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding ID}" Header="Номер группы" />
+                        <DataGridTextColumn Binding="{Binding Faculty}" Header="Факультет" />
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Направление" />
                     </DataGrid.Columns>
                 </DataGrid>
 

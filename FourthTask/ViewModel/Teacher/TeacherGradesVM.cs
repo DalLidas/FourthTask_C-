@@ -6,6 +6,8 @@ using System.Linq;
 using System.Windows.Input;
 using FourthTask.ViewModels.Commands;
 using System.Security.Policy;
+using System.Windows;
+using System.ComponentModel;
 
 namespace FourthTask.ViewModels
 {
@@ -13,19 +15,20 @@ namespace FourthTask.ViewModels
     {
         public struct SubjectView
         {
-            public int? subjectId { get; set; }
+            public int? jornalId { get; set; }
             public string? subjectName { get; set; }
             public string? date { get; set; }
             public string? subjectGrade { get; set; }
 
-            public SubjectView(int? subjectId, string? subjectName, string? date, string? subjectGrade)
+            public SubjectView(int? jornalId, string? subjectName, string? date, string? subjectGrade)
             {
-                this.subjectId = subjectId;
+                this.jornalId = jornalId;
                 this.subjectName = subjectName;
                 this.date = date;
                 this.subjectGrade = subjectGrade;
             }
-        };
+        }
+
 
         public struct StudentGradeView
         {
@@ -45,13 +48,16 @@ namespace FourthTask.ViewModels
             }
         }
 
+       
         public ObservableCollection<StudentGradeView> students { get; set; }
+        public ObservableCollection<StudentGradeView> studentsView { get; set; }
 
         public TeacherGradesVM()
         {
             students = new ObservableCollection<StudentGradeView>();
+            studentsView = new ObservableCollection<StudentGradeView>();
 
-            //TeacherEditGradesCommand = new LambdaCommand(OnTeacherEditGradesCommandExecute, CanTeacherEditGradesCommandExecute);
+            TeacherUpdateGradesCommand = new LambdaCommand(OnTeacherUpdateGradesCommandExecute, CanTeacherUpdateGradesCommandExecute);
 
             GetData();
         }
@@ -113,7 +119,7 @@ namespace FourthTask.ViewModels
                             lock (subjects)
                             {
                                 subjects.Add(new SubjectView(
-                                    buffsubject?.ID,
+                                    buffJornal?.ID,
                                     buffsubject?.Name,
                                     exam.Date,
                                     grade
@@ -133,9 +139,46 @@ namespace FourthTask.ViewModels
                             ));
                         }
                     }
+
+                    studentsView.Clear();
+                    for (int i = 0; i < students.Count; ++i)
+                    {
+                        studentsView.Add(students[i]);
+                    }
                 }
             }
         }
+
+        #region Команды
+
+        #region Команда показа студентов моей группы
+        public ICommand TeacherUpdateGradesCommand { get; }
+        private bool CanTeacherUpdateGradesCommandExecute(object parameter) => true;
+        private void OnTeacherUpdateGradesCommandExecute(object parameter)
+        {
+            string str1;
+            string str2;
+
+            str1 = students[0].fullName + ": (";
+            for (int i = 1; i < students[0].subjects.Count; ++i)
+            {
+                str1 += students[0].subjects[i]?.subjectName + " " + students[0].subjects[i]?.subjectGrade + "\n";
+            }
+            str1 += ")\n";
+
+            str2 = students[0].fullName + ": (";
+            for (int i = 0; i < studentsView[0].subjects.Count; ++i)
+            {
+                str2 += studentsView[0].subjects[i]?.subjectName + " " + studentsView[0].subjects[i]?.subjectGrade + "\n";
+            }
+            str2 += ")\n";
+
+
+            MessageBox.Show("STR1: "+str1 + "\n\n\n" + "STR2: " + str2 + "\n\n\n");
+        }
+        #endregion Команда показа студентов моей группы
+
+        #endregion Команды
 
         private string _Title = "Технологический ВУЗ \"Сессия\"";
         public string Title
