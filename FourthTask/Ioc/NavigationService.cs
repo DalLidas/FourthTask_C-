@@ -39,11 +39,6 @@ namespace FourthTask.PageNavigation
             _frame.Navigate(new TeacherMainPage());
         }
 
-        public void NavigateToMainDeanWorkmanPage()
-        {
-            _frame.Navigate(new MainDeanWorkmanPage());
-        }
-
         public void NavigateToMainAdminPage()
         {
             _frame.Navigate(new MainAdminPage());

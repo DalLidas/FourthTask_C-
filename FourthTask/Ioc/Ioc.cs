@@ -11,7 +11,6 @@ namespace FourthTask.PageNavigation.Ioc
         private static IContainer? _container;
         private static IContainer? _studentContainer;
         private static IContainer? _teacherContainer;
-        private static IContainer? _deanWorkmanContainer;
         private static IContainer? _adminContainer;
 
         public static Model? model;
@@ -21,15 +20,18 @@ namespace FourthTask.PageNavigation.Ioc
             get { return _container?.Resolve<MainNavigationServiceBase>(); }
         }
 
+
         public static StudentNavigationServiceBase? StudentNavigationService
         {
             get { return _studentContainer?.Resolve<StudentNavigationServiceBase>(); }
         }
 
+
         public static TeacherNavigationServiceBase? TeacherNavigationService
         {
             get { return _teacherContainer?.Resolve<TeacherNavigationServiceBase>(); }
         }
+
 
         public static void InitPages(Frame frame)
         {
@@ -44,6 +46,7 @@ namespace FourthTask.PageNavigation.Ioc
             _container = builder.Build();
         }
 
+
         public static void InitStudentPages(Frame frame)
         {
             var builder = new ContainerBuilder();
@@ -56,6 +59,7 @@ namespace FourthTask.PageNavigation.Ioc
 
             _studentContainer = builder.Build();
         }
+
 
         public static void InitTeacherPages(Frame frame)
         {
@@ -70,18 +74,6 @@ namespace FourthTask.PageNavigation.Ioc
             _teacherContainer = builder.Build();
         }
 
-        public static void InitDeanWorkmanPages(Frame frame)
-        {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<MainNavigationService>()
-                .As<DeanWorkmanNavigationServiceBase>()
-                .SingleInstance()
-                .WithParameter(new TypedParameter(typeof(Frame), frame));
-
-
-            _deanWorkmanContainer = builder.Build();
-        }
 
         public static void InitAdminPages(Frame frame)
         {

@@ -38,10 +38,6 @@ namespace FourthTask.ViewModels
                         case Models.Privilages.teacher:
                             Ioc.MainNavigationService?.NavigateToMainTeacherPage();
                             break;
-                        //case Models.Privilages.deanWorkman:
-                        //    Ioc.MainNavigationService?.NavigateToMainDeanWorkmanPage();
-                        //    break;
-
                         case Models.Privilages.admin:
                             Ioc.MainNavigationService?.NavigateToMainAdminPage();
                             break;

@@ -17,8 +17,6 @@ namespace FourthTask.PageNavigation.Base
 
         void NavigateToMainTeacherPage();
 
-        void NavigateToMainDeanWorkmanPage();
-
         void NavigateToMainAdminPage();
     }
 
@@ -37,7 +35,6 @@ namespace FourthTask.PageNavigation.Base
         public void NavigateToTeacherGroupsPage();
         public void NavigateToTeacherGradesPage();
     }
-    public interface DeanWorkmanNavigationServiceBase;
     public interface AdminNavigationServiceBase;
 
 }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FourthTask
+namespace FourthTask.Pages.Admin
 {
     /// <summary>
-    /// Логика взаимодействия для MainDeanWorkmanPage.xaml
+    /// Логика взаимодействия для AdminExamPage.xaml
     /// </summary>
-    public partial class MainDeanWorkmanPage : Page
+    public partial class AdminExamPage : Page
     {
-        public MainDeanWorkmanPage()
+        public AdminExamPage()
         {
             InitializeComponent();
         }
