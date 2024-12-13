@@ -24,9 +24,8 @@ namespace FourthTask.Models
     {
         None = 0,
         admin = 1,
-        deanWorkman = 2,
-        teacher = 3,
-        student = 4,
+        teacher = 2,
+        student = 3,
     }
 
     public class Model
@@ -87,10 +86,12 @@ namespace FourthTask.Models
 
 
         #region Admin
-        #endregion Admin
+        public User? GetCurrentSession()
+        {
+            return this.sessionUser;
+        }
 
-        #region deanWorkman
-        #endregion deanWorkman
+        #endregion Admin
 
         #region teacher
         public Staff? GetCurrentStaff()
@@ -696,7 +697,7 @@ namespace FourthTask.Models
                 {
                     currStudent = await DBConnector.student.GetItemAsync(sessionUser.ID);
                 }
-                else if (sessionPrivilages == Privilages.deanWorkman || sessionPrivilages == Privilages.teacher)
+                else if (sessionPrivilages == Privilages.teacher)
                 {
                     currStaff = await DBConnector.staff.GetItemAsync(sessionUser.ID);
                 }
@@ -785,8 +786,6 @@ namespace FourthTask.Models
             {
                 case "Admin":
                     return Privilages.admin;
-                case "DeanWorkman":
-                    return Privilages.deanWorkman;
                 case "Teacher":
                     return Privilages.teacher;
                 case "Student":

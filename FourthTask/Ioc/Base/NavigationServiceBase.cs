@@ -35,6 +35,17 @@ namespace FourthTask.PageNavigation.Base
         public void NavigateToTeacherGroupsPage();
         public void NavigateToTeacherGradesPage();
     }
-    public interface AdminNavigationServiceBase;
+
+    public interface AdminNavigationServiceBase
+    {
+        public void NavigateToAdminUserPage();
+        public void NavigateToAdminStaffPage();
+        public void NavigateToAdminGroupPage();
+        public void NavigateToAdminStudentPage();
+        public void NavigateToAdminSubjectPage();
+        public void NavigateToAdminSpecializationPage();
+        public void NavigateToAdminExamPage();
+        public void NavigateToAdminJournalPage();
+    }
 
 }

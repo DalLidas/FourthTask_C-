@@ -32,6 +32,11 @@ namespace FourthTask.PageNavigation.Ioc
             get { return _teacherContainer?.Resolve<TeacherNavigationServiceBase>(); }
         }
 
+        public static AdminNavigationServiceBase? AdminNavigationService
+        {
+            get { return _adminContainer?.Resolve<AdminNavigationServiceBase>(); }
+        }
+
 
         public static void InitPages(Frame frame)
         {

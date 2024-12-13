@@ -21,7 +21,7 @@
       FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
-        <vm:StudentMainPageViewModel/>
+        <vm:AdminMainPageViewModel/>
     </Page.DataContext>
 
     <Grid>
@@ -77,14 +77,14 @@
             NavigationUIVisibility="Hidden"/>
 
         <!--Для админов-->
-        <Button Command="{Binding ShowStudentGroupmatesCommand}" Margin="0,136,0,382" Content="Таблица пользователей" />
-        <Button Command="{Binding ShowStudentTeachersCommand}" Margin="0,172,0,346" Content="Таблица преподавателей" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,246,0,272" Content="Таблица студентов" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,210,0,308" Content="Таблица групп" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,284,0,234" Content="Таблица предметов" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,320,0,198" Content="Таблица специализации" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,358,0,160" Content="Таблица экзаменов" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,394,0,124" Content="Таблица журнала" />
+        <Button Command="{Binding ShowUserTableCommand}" Margin="0,136,0,382" Content="Таблица пользователей" />
+        <Button Command="{Binding ShowStaffTableCommand}" Margin="0,172,0,346" Content="Таблица преподавателей" />
+        <Button Command="{Binding ShowGroupTableCommand}" Margin="0,210,0,308" Content="Таблица групп" />
+        <Button Command="{Binding ShowStudentTableCommand}" Margin="0,246,0,272" Content="Таблица студентов" />
+        <Button Command="{Binding ShowSubjectTableCommand}" Margin="0,284,0,234" Content="Таблица предметов" />
+        <Button Command="{Binding ShowSpecializationTableCommand}" Margin="0,320,0,198" Content="Таблица специализации" />
+        <Button Command="{Binding ShowExamTableCommand}" Margin="0,358,0,160" Content="Таблица экзаменов" />
+        <Button Command="{Binding ShowJournalTableCommand}" Margin="0,394,0,124" Content="Таблица журнала" />
 
         <Button Command="{Binding ExitUserCommand}" Margin="0,483,0,35" Content="Выход из учётной записи" />
 
