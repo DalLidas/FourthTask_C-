@@ -84,7 +84,7 @@ namespace FourthTask.PageNavigation.Ioc
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainNavigationService>()
+            builder.RegisterType<AdminNavigationService>()
                 .As<AdminNavigationServiceBase>()
                 .SingleInstance()
                 .WithParameter(new TypedParameter(typeof(Frame), frame));

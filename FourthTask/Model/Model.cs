@@ -86,10 +86,482 @@ namespace FourthTask.Models
 
 
         #region Admin
+
         public User? GetCurrentSession()
         {
             return this.sessionUser;
         }
+
+
+        // Получение таблицы пользователей
+        public async Task<List<User>> GetAdminUsers()
+        {
+            var users = new List<User>();
+
+            if (DBConnector is not null && DBConnector.person is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.person.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (users)
+                            {
+                                users.Add(item);
+                            }
+
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return users;
+        }
+        // Получение таблицы преподавателей
+        public async Task<List<Staff>> GetAdminStaff()
+        {
+            var staff = new List<Staff>();
+
+            if (DBConnector is not null && DBConnector.staff is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.staff.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (staff)
+                            {
+                                staff.Add(item);
+                            }
+
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return staff;
+        }
+        // Получение таблицы групп
+        public async Task<List<Group>> GetAdminGroup()
+        {
+            var groups = new List<Group>();
+
+            if (DBConnector is not null && DBConnector.group is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.group.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (groups)
+                            {
+                                groups.Add(item);
+                            }
+
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return groups;
+        }
+        // Получение таблицы студентов
+        public async Task<List<Student>> GetAdminStudent()
+        {
+            var students = new List<Student>();
+
+            if (DBConnector is not null && DBConnector.student is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.student.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (students)
+                            {
+                                students.Add(item);
+                            }
+
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return students;
+        }
+        // Получение таблицы предметов
+        public async Task<List<Subject>> GetAdminSubject()
+        {
+            var subjects = new List<Subject>();
+
+            if (DBConnector is not null && DBConnector.subject is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.subject.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (subjects)
+                            {
+                                subjects.Add(item);
+                            }
+
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return subjects;
+        }
+        // Получение таблицы специализаций
+        public async Task<List<Specialization>> GetAdminSpecialization()
+        {
+            var specializations = new List<Specialization>();
+
+            if (DBConnector is not null && DBConnector.specialization is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.specialization.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (specializations)
+                            {
+                                specializations.Add(item);
+                            }
+
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return specializations;
+        }
+        // Получение таблицы экзаменов
+        public async Task<List<Exam>> GetAdminExam()
+        {
+            var exams = new List<Exam>();
+
+            if (DBConnector is not null && DBConnector.exam is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.exam.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (exams)
+                            {
+                                exams.Add(item);
+                            }
+                            
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return exams;
+        }
+        // Получение таблицы журнала
+        public async Task<List<Journal>> GetAdminJournal()
+        {
+            var journal = new List<Journal>();
+
+            if (DBConnector is not null && DBConnector.journal is not null && sessionUser is not null)
+            {
+                var requst = await DBConnector.journal.GetItemsAsync();
+
+                if (requst is not null)
+                {
+                    List<Task> tasks = new List<Task>();
+                    Parallel.ForEach(requst, item =>
+                    {
+                        var task = Task.Run(() => {
+                            lock (journal)
+                            {
+                                journal.Add(item);
+                            }
+
+                        });
+
+                        tasks.Add(task);
+                    });
+
+                    // Выполнение всех тасков
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+            return journal;
+        }
+
+
+        public async Task<int> SetAdminUser(User user)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.person is not null && user is not null)
+                {
+                    return await DBConnector.person.SaveItemAsync(user);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> SetAdminStaff(Staff staff)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.staff is not null && staff is not null)
+                {
+                    return await DBConnector.staff.SaveItemAsync(staff);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> SetAdminGroup(Group group)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.group is not null && group is not null)
+                {
+                    return await DBConnector.group.SaveItemAsync(group);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> SetAdminStudent(Student student)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.student is not null && student is not null)
+                {
+                    return await DBConnector.student.SaveItemAsync(student);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> SetAdminSubject(Subject subject)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.subject is not null && subject is not null)
+                {
+                    return await DBConnector.subject.SaveItemAsync(subject);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> SetAdminSpecialization(Specialization specialization)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.specialization is not null && specialization is not null)
+                {
+                    return await DBConnector.specialization.SaveItemAsync(specialization);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> SetAdminExam(Exam exam)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.exam is not null && exam is not null)
+                {
+                    return await DBConnector.exam.SaveItemAsync(exam);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> SetAdminJournal(Journal journal)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.journal is not null && journal is not null)
+                {
+                    return await DBConnector.journal.SaveItemAsync(journal);
+                }
+            }
+
+            return 0;
+        }
+
+
+        public async Task<int> DeleteAdminUser(User user)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.person is not null && user is not null)
+                {
+                    return await DBConnector.person.DeleteItemAsync(user);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> DeleteAdminStaff(Staff staff)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.staff is not null && staff is not null)
+                {
+                    return await DBConnector.staff.DeleteItemAsync(staff);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> DeleteAdminGroup(Group group)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.group is not null && group is not null)
+                {
+                    return await DBConnector.group.DeleteItemAsync(group);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> DeleteAdminStudent(Student student)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.student is not null && student is not null)
+                {
+                    return await DBConnector.student.DeleteItemAsync(student);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> DeleteAdminSubject(Subject subject)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.subject is not null && subject is not null)
+                {
+                    return await DBConnector.subject.DeleteItemAsync(subject);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> DeleteAdminSpecialization(Specialization specialization)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.specialization is not null && specialization is not null)
+                {
+                    return await DBConnector.specialization.DeleteItemAsync(specialization);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> DeleteAdminExam(Exam exam)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.exam is not null && exam is not null)
+                {
+                    return await DBConnector.exam.DeleteItemAsync(exam);
+                }
+            }
+
+            return 0;
+        }
+        public async Task<int> DeleteAdminJournal(Journal journal)
+        {
+            if (DBConnector is not null && sessionUser is not null)
+            {
+                //Запрос на специализацию преподавателя
+                if (DBConnector.journal is not null && journal is not null)
+                {
+                    return await DBConnector.journal.DeleteItemAsync(journal);
+                }
+            }
+
+            return 0;
+        }
+
 
         #endregion Admin
 

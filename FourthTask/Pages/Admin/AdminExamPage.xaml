@@ -21,30 +21,122 @@
          FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
-        <vm:StudentTeachersVM/>
+        <vm:AdminExamVM/>
     </Page.DataContext>
 
-    <Grid >
-        <Border Grid.Column="1" Background="#623ed0" Padding="10" CornerRadius="10">
-            <Grid >
+    <Grid>
+        <!-- Основная структура -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Контейнер с бордюром -->
+        <Border Background="#623ed0" Padding="10" CornerRadius="10">
+            <Grid>
+                <!-- Определяем строки -->
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <DataGrid ItemsSource="{Binding Teachers}" SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedItem}" Margin="0,0,0,6" IsReadOnly="True">
-                    <DataGrid.Columns >
-                        <DataGridTextColumn Binding="{Binding fullName}" Header="Фио" />
-                        <DataGridTextColumn Binding="{Binding birth}" Header="Год рождения"/>
-                        <DataGridTextColumn Binding="{Binding job}" Header="Должность"/>
-                        <DataGridTextColumn Binding="{Binding subject}" Header="Преподоваемый предмет"/>
-                        <DataGridTextColumn Binding="{Binding Merit}" Header="Заслуги"/>
-                        <DataGridTextColumn Binding="{Binding Internship}" Header="Стаж"/>
-
+                <!-- Верхняя таблица -->
+                <DataGrid 
+                    ItemsSource="{Binding Exams}"
+                    SelectionMode="Single" 
+                    AutoGenerateColumns="False" 
+                    CanUserAddRows="False" 
+                    SelectedItem="{Binding SelectedItem}"
+                    IsReadOnly="False"
+                    Margin="0,0,0,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ID}" Header="ID" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Date}" Header="Дата" />
+                        <DataGridTextColumn Binding="{Binding RatingMethod}" Header="Метод оценивания" />
+                        <DataGridTextColumn Binding="{Binding GroupID}" Header="ID группы" />
+                        <DataGridTextColumn Binding="{Binding SpecializationID}" Header="ID специализации" />
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <!--<TextBlock Text="{Binding SelectedItem.ID, StringFormat='Выбранный ID {0}'}" Foreground="White"  Grid.Row="1" />-->
+                <!-- Нижняя панель -->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Верхний уровень панели -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <TextBlock VerticalAlignment="Center"  Foreground="White" Padding="0,0,10,0">
+                            <Run Text="ID записи: "/><Run Text=" "/><Run Text="{Binding SelectedItem.ID}" />
+                            </TextBlock>
+
+                            <Button
+                            Command="{Binding DeleteSelectedCommand}"
+                            Content="Удалить запись" 
+                            Background="White" 
+                            BorderBrush="White" 
+                            Foreground="#FF623ED0" 
+                            FontSize="12" 
+                            Padding="10,5"
+                            Height="30" 
+                            IsEnabled="{Binding SelectedItem, Converter={StaticResource NullToBoolConverter}}" />
+
+                        </StackPanel>
+
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding RefreshCommand}"
+                            Content="Обновить таблицу" 
+                            Background="White" 
+                            BorderBrush="White" 
+                            Foreground="#FF623ED0" 
+                            FontSize="12" 
+                            Padding="10,5"
+                            Height="30"/>
+
+                    </Grid>
+                    
+
+                    <!-- Нижняя таблица с кнопкой -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid 
+                            Grid.Column="0"
+                            ItemsSource="{Binding AddingExams}"
+                            AutoGenerateColumns="False" 
+                            CanUserAddRows="False"
+                            SelectedItem="{Binding AddingItem}"
+                            Margin="0,0,10,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Date}" Header="Дата" />
+                                <DataGridTextColumn Binding="{Binding RatingMethod}" Header="Метод оценивания" />
+                                <DataGridTextColumn Binding="{Binding GroupID}" Header="ID группы" />
+                                <DataGridTextColumn Binding="{Binding SpecializationID}" Header="ID специализации" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        
+
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding AddNewItemCommand}"
+                            Content="Добавить запись" 
+                            Background="White" 
+                            BorderBrush="White" 
+                            Foreground="#FF623ED0" 
+                            FontSize="12" 
+                            Padding="10,5" Margin="0,33,0,0" />
+                    </Grid>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

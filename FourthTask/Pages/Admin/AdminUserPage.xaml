@@ -3,12 +3,141 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:FourthTask.ViewModels"
       xmlns:local="clr-namespace:FourthTask.Pages.Admin"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdminUserPage">
+       d:DesignHeight="450" d:DesignWidth="800"
+
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         Title="{Binding Title}" Width="auto" Height="auto" MinHeight="300" MinWidth="300"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Page.DataContext>
+        <vm:AdminUserVM/>
+    </Page.DataContext>
 
     <Grid>
-        
+        <!-- Основная структура -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Контейнер с бордюром -->
+        <Border Background="#623ed0" Padding="10" CornerRadius="10">
+            <Grid>
+                <!-- Определяем строки -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Верхняя таблица -->
+                <DataGrid 
+                    ItemsSource="{Binding Users}"
+                    SelectionMode="Single" 
+                    AutoGenerateColumns="False" 
+                    CanUserAddRows="False" 
+                    SelectedItem="{Binding SelectedItem}"
+                    IsReadOnly="False"
+                    Margin="0,0,0,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ID}" Header="ID" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Login}" Header="Логин" />
+                        <DataGridTextColumn Binding="{Binding Password}" Header="Пароль" />
+                        <DataGridTextColumn Binding="{Binding Email}" Header="Почта" />
+                        <DataGridTextColumn Binding="{Binding Privilages}" Header="Привилегии" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Нижняя панель -->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Верхний уровень панели -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <TextBlock VerticalAlignment="Center"  Foreground="White" Padding="0,0,10,0">
+                            <Run Text="ID записи: "/><Run Text=" "/><Run Text="{Binding SelectedItem.ID}" />
+                            </TextBlock>
+
+                            <Button
+                            Command="{Binding DeleteSelectedCommand}"
+                            Content="Удалить запись" 
+                            Background="White" 
+                            BorderBrush="White" 
+                            Foreground="#FF623ED0" 
+                            FontSize="12" 
+                            Padding="10,5"
+                            Height="30" 
+                            IsEnabled="{Binding SelectedItem, Converter={StaticResource NullToBoolConverter}}" />
+
+                        </StackPanel>
+
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding RefreshCommand}"
+                            Content="Обновить таблицу" 
+                            Background="White" 
+                            BorderBrush="White" 
+                            Foreground="#FF623ED0" 
+                            FontSize="12" 
+                            Padding="10,5"
+                            Height="30"/>
+
+                    </Grid>
+
+
+                    <!-- Нижняя таблица с кнопкой -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid 
+                            Grid.Column="0"
+                            ItemsSource="{Binding AddingUsers}"
+                            AutoGenerateColumns="False" 
+                            CanUserAddRows="False"
+                            SelectedItem="{Binding AddingItem}"
+                            Margin="0,0,10,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Login}" Header="Логин" />
+                                <DataGridTextColumn Binding="{Binding Password}" Header="Пароль" />
+                                <DataGridTextColumn Binding="{Binding Email}" Header="Почта" />
+                                <DataGridTextColumn Binding="{Binding Privilages}" Header="Привилегии" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding AddNewItemCommand}"
+                            Content="Добавить запись" 
+                            Background="White" 
+                            BorderBrush="White" 
+                            Foreground="#FF623ED0" 
+                            FontSize="12" 
+                            Padding="10,5" Margin="0,33,0,0" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

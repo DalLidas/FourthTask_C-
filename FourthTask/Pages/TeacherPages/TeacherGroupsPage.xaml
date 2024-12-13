@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:vm="clr-namespace:FourthTask.ViewModels"
       xmlns:local="clr-namespace:FourthTask.Pages.TeacherPages"
-      xmlns:converters="clr-namespace:FourthTask.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
@@ -19,10 +18,6 @@
     <Page.DataContext>
         <vm:TeacherGroupsVM/>
     </Page.DataContext>
-
-    <Page.Resources>
-        <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
-    </Page.Resources>
 
     <Grid>
         <!-- Основная структура -->

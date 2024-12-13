@@ -128,8 +128,6 @@ namespace FourthTask.ViewModels
         #endregion Команды
 
 
-
-
         #region Поля
 
         private string _Title = "Технологический ВУЗ \"Сессия\"";
