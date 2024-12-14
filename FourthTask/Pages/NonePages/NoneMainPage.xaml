@@ -21,9 +21,8 @@
       FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
-        <vm:AdminMainPageViewModel/>
+        <vm:NoneMainViewModel/>
     </Page.DataContext>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -81,8 +80,17 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    
-                    
+
+                    <Label Content="Заявка для регистрации в системе &quot;Сессия&quot;" 
+                           FontSize="20" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Top" 
+                           HorizontalContentAlignment="Center" 
+                           VerticalContentAlignment="Center"
+                           Margin="0,92,0,0" 
+                           Width="540" 
+                           Height="30" 
+                           Foreground="WhiteSmoke"/>
 
                     <!-- Таблица -->
                     <Grid >
@@ -91,14 +99,23 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBox TextWrapping="Wrap" Text="{Binding students}" Background="LightGray" Margin="10,33,10,0"/>
-                        
-                       
-                            
+                        <Border  CornerRadius="20"  Background="{DynamicResource MaterialDesignPaper}" Margin="10,132,10,106" >
+                            <!-- Поле ввода -->
+                            <TextBox
+                                 Margin="10"
+                                 TextWrapping="Wrap" 
+                                 Text="{Binding students}" 
+                                 Foreground="{DynamicResource MaterialDesignBody}"
+                                 FontSize="14" 
+                                 HorizontalContentAlignment="Left" 
+                                 materialDesign:HintAssist.Hint="Введите текст заявки"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource MaterialDesignBody}"/>
+                        </Border>
+
                     </Grid>
 
                     <!-- Нижняя панель -->
-                    <Grid Grid.Row="1">
+                    <Grid Margin="0,382,0,0" Grid.RowSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -119,9 +136,16 @@
             </Border>
         </Grid>
 
-        <!--Для админов-->
-        <Label Content="Заполните форму запроса "  HorizontalAlignment="Center" Margin="0,194,0,0" VerticalAlignment="Top" Width="180" Height="27" Foreground="WhiteSmoke"/>
-        <Label Content="для добавления аккаунта "  HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="22" Foreground="WhiteSmoke" Margin="0,208,0,0"/>
+        <Label Content="Сообщение:" HorizontalContentAlignment="Center" FontSize="15" Margin="10,154,10,366" Width="180" Foreground="WhiteSmoke"/>
+        <Label Content="Здраствуйте, уважаемый пользователь!" HorizontalContentAlignment="Center" FontSize="9" Margin="10,185,10,345" Width="180" Foreground="WhiteSmoke"/>
+        <Label Content="Вы зарегистрировались в системе" HorizontalContentAlignment="Center" FontSize="9" Margin="10,205,10,325" Width="180" Foreground="WhiteSmoke"/>
+        <Label Content="&quot;Сессия&quot;. Заполните форму заявки для" HorizontalContentAlignment="Center" FontSize="9" Margin="10,225,10,305" Width="180" Foreground="WhiteSmoke"/>
+        <Label Content="верификации и ожидайте ответа от " HorizontalContentAlignment="Center" FontSize="9" Margin="10,245,10,285" Width="180" Foreground="WhiteSmoke"/>
+        <Label Content="админестрации." HorizontalContentAlignment="Center" FontSize="9" Margin="10,265,10,265" Width="180" Foreground="WhiteSmoke"/>
+
+
+
+
 
         <Button Command="{Binding ExitUserCommand}" Margin="0,483,0,35" Content="Выход из учётной записи" />
     </Grid>
