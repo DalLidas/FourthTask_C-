@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.Windows;
 using FourthTask.ViewModels.Commands;
 using FourthTask.PageNavigation.Ioc;
-using System.IO;
 
 
 namespace FourthTask.ViewModels
@@ -22,7 +21,7 @@ namespace FourthTask.ViewModels
         /// Созадине комынды для авторизации в системе
         /// </summary>
         public ICommand AuthorizationCommand { get; }
-        private bool CanAuthorizationCommandExecute(object parameter) => true;
+        private bool CanAuthorizationCommandExecute(object parameter) => Ioc.model is not null && Ioc.model.DBConnector is not null;
         private async void OnAuthorizationCommandExecute(object parameter)
         {
             if (Ioc.model is not null && Ioc.model.DBConnector is not null) 
@@ -30,20 +29,27 @@ namespace FourthTask.ViewModels
                 await Ioc.model.StartSession(_login.Trim(), _password.Trim());
 
                 if (Ioc.model.GetSessionStatus())
+                {
                     switch (Ioc.model.GetSessionPrivilages())
                     {
-                        case Models.Privilages.student:
-                            Ioc.MainNavigationService?.NavigateToMainStudentPage();
+                        case Models.Privilages.admin:
+                            Ioc.MainNavigationService?.NavigateToAdminMainPage();
                             break;
                         case Models.Privilages.teacher:
-                            Ioc.MainNavigationService?.NavigateToMainTeacherPage();
+                            Ioc.MainNavigationService?.NavigateToTeacherMainPage();
                             break;
-                        case Models.Privilages.admin:
-                            Ioc.MainNavigationService?.NavigateToMainAdminPage();
+                        case Models.Privilages.student:
+                            Ioc.MainNavigationService?.NavigateToStudentMainPage();
+                            break;
+                        case Models.Privilages.None:
+                            Ioc.MainNavigationService?.NavigateToNoneMainPage();
                             break;
                     }
+                }
                 else
+                {
                     MessageBox.Show("Пользователя с таким логином и паролем не зарегистрировано");
+                }       
             }
             else
             {

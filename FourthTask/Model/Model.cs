@@ -1,31 +1,19 @@
-﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using FourthTask.DataBase.Connector;
-using System.Collections.Concurrent;
-using System.Security;
-using System.Data.Common;
 using FourthTask.DataBase;
-using Newtonsoft.Json.Linq;
-using FourthTask.PageNavigation.Ioc;
-using FourthTask.ViewModels;
-using static MaterialDesignThemes.Wpf.Theme.ToolBar;
-using static SQLite.SQLite3;
+using FourthTask.Utilities;
 
 
 namespace FourthTask.Models
 {
     public enum Privilages
     {
-        None = 0,
-        admin = 1,
-        teacher = 2,
-        student = 3,
+        Error = 0,
+        None = 1,
+        admin = 2,
+        teacher = 3,
+        student = 4,
     }
 
     public class Model
@@ -61,12 +49,12 @@ namespace FourthTask.Models
             if (DBConnector is null) return false;
             await DBConnector.InitAsync();
 
-            if (createNewDBFlag is true && DBConnector is not null && DBConnector.person is not null)
+            if (createNewDBFlag && DBConnector is not null && DBConnector.person is not null)
             {
                 User rootUser = new User()
                 {
                     Login = "root",
-                    Password = "root",
+                    Password = EncryptionUtility.HashPassword("root"),
                     Email = "danil.mukhametov@mail.ru",
                     Privilages = "Admin"
                 };
@@ -144,7 +132,6 @@ namespace FourthTask.Models
                             {
                                 staff.Add(item);
                             }
-
                         });
 
                         tasks.Add(task);
@@ -1128,7 +1115,7 @@ namespace FourthTask.Models
                     {
                         var task = Task.Run(() =>
                         {
-                            if (user.Login == login && user.Password == password)
+                            if (user.Login == login && EncryptionUtility.VerifyPassword(password, user.Password ?? ""))
                             {
                                 sessionUser = user;
 
@@ -1235,9 +1222,9 @@ namespace FourthTask.Models
                     var user = new User
                     {
                         Login = login,
-                        Password = password,
+                        Password = EncryptionUtility.HashPassword(password),
                         Email = email,
-                        Privilages = "Student"
+                        Privilages = "None"
                     };
 
                     await DBConnector.person.SaveItemAsync(user);
@@ -1262,8 +1249,10 @@ namespace FourthTask.Models
                     return Privilages.teacher;
                 case "Student":
                     return Privilages.student;
-                default:
+                case "None":
                     return Privilages.None;
+                default:
+                    return Privilages.Error;
             }
         }
 

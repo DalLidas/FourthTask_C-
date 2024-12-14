@@ -30,19 +30,24 @@ namespace FourthTask.PageNavigation
             _frame.Navigate(new RegistrationPage());
         }
 
-        public void NavigateToMainStudentPage()
+        public void NavigateToAdminMainPage()
         {
-            _frame.Navigate(new MainStudentPage());
+            _frame.Navigate(new MainAdminPage());
         }
 
-        public void NavigateToMainTeacherPage()
+        public void NavigateToTeacherMainPage()
         {
             _frame.Navigate(new TeacherMainPage());
         }
 
-        public void NavigateToMainAdminPage()
+        public void NavigateToStudentMainPage()
         {
-            _frame.Navigate(new MainAdminPage());
+            _frame.Navigate(new MainStudentPage());
+        }
+
+        public void NavigateToNoneMainPage()
+        {
+            _frame.Navigate(new NoneMainPage());
         }
     }
 

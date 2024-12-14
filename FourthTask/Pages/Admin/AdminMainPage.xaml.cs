@@ -13,6 +13,7 @@ namespace FourthTask
             InitializeComponent();
 
             Ioc.InitAdminPages(_mainStudentPageFrame);
+            Ioc.AdminNavigationService?.NavigateToAdminUserPage();
         }
     }
 }

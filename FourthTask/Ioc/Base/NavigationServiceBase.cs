@@ -13,11 +13,14 @@ namespace FourthTask.PageNavigation.Base
 
         void NavigateToRegistrationPage();
 
-        void NavigateToMainStudentPage();
+        void NavigateToAdminMainPage();
 
-        void NavigateToMainTeacherPage();
+        void NavigateToTeacherMainPage();
 
-        void NavigateToMainAdminPage();
+        void NavigateToStudentMainPage();
+
+        void NavigateToNoneMainPage();
+
     }
 
     public interface StudentNavigationServiceBase

@@ -10,6 +10,11 @@
 
   <ItemGroup>
     <None Remove="Static\Images\AuthorizationBackground.jpg" />
+    <None Remove="Static\Images\kot1.jpg" />
+    <None Remove="Static\Images\kot2.jpg" />
+    <None Remove="Static\Images\kot3.jpg" />
+    <None Remove="Static\Images\LL.jpg" />
+    <None Remove="Static\Images\LLL.jpg" />
     <None Remove="Static\Images\MainBackground.jpg" />
     <None Remove="Static\Images\MainBackground1.jpg" />
     <None Remove="Static\Images\MainBackground2.jpg" />
@@ -30,6 +35,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Static\Images\kot1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\kot2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\LL.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Static\Images\LLL.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Static\Images\MainBackground.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

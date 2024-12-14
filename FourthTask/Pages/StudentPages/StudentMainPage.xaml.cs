@@ -26,6 +26,7 @@ namespace FourthTask
             InitializeComponent();
 
             Ioc.InitStudentPages(_mainStudentPageFrame);
+            Ioc.StudentNavigationService?.NavigateToStudentGroupmatesPage();
         }
         
     }

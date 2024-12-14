@@ -1,4 +1,4 @@
-﻿<Page x:Class="FourthTask.TeacherMainPage"
+﻿<Page x:Class="FourthTask.NoneMainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,8 @@
       xmlns:vm="clr-namespace:FourthTask.ViewModels"
       xmlns:local="clr-namespace:FourthTask"
       mc:Ignorable="d" 
-     
+      d:DesignHeight="450" d:DesignWidth="800"
+    
       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -19,9 +20,8 @@
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}">
 
-
     <Page.DataContext>
-        <vm:TeacherMainPageVM/>
+        <vm:AdminMainPageViewModel/>
     </Page.DataContext>
 
     <Grid>
@@ -44,11 +44,10 @@
                         DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="20 -30 0 0" VerticalAlignment="Top">
                     <Ellipse>
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="pack://application:,,,/Static/Images/kot2.jpg"/>
+                            <ImageBrush ImageSource="pack://application:,,,/Static/Images/kot1.jpg"/>
                         </Ellipse.Fill>
                     </Ellipse>
                 </Border>
-                <TextBlock FontSize="12" HorizontalAlignment="Center" Margin="20 0 5 20"><Run Language="ru-ru" Foreground="White" Text="{Binding StaffName}"/></TextBlock>
             </DockPanel>
         </Border>
 
@@ -68,24 +67,61 @@
             <iconPacks:PackIconMaterial Kind="Menu" Width="25" Height="25" Foreground="WhiteSmoke"/>
         </Button>
 
-        <Frame
-            Grid.Column="1"
-            Margin="10,47, 10, 10" 
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch"  
-            Name="_mainStudentPageFrame" 
-            NavigationUIVisibility="Hidden"/>
+        <Grid Grid.Column="1" Margin="10,47, 10, 10" >
+            <!-- Основная структура -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <!--Статика-->
-        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,129,10,400"><Run Language="ru-ru" Foreground="White" Text="День рождения: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffBirth}" /></TextBlock>
-        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,150,10,382"><Run Language="ru-ru" Foreground="White" Text="Должность: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffJob}" /></TextBlock>
-        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,189,10,294"><Run Language="ru-ru" Foreground="White" Text="Заслуги: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffMerit}" /></TextBlock>
-        <TextBlock  FontSize="13" TextWrapping="Wrap" Margin="10,168,10,366"><Run Language="ru-ru" Foreground="White" Text="Стаж: "/><Run Language="ru-ru" Foreground="White" Text="{Binding StaffInternship}" /></TextBlock>
+            <!-- Контейнер с бордюром -->
+            <Border Background="#623ed0" Padding="10" CornerRadius="10">
+                <Grid>
+                    <!-- Определяем строки -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    
 
-        <!--Кнопки-->
-        <Button Command="{Binding ShowTeacherGroupsCommand}" Margin="0,261,0,257" Content="Мои группы" />
-        <!--<Button Command="{Binding ShowStudentTeachersCommand}" Margin="0,263,0,255" Content="Мои преподаватели" />
-        <Button Command="{Binding ShowStudentExamsCommand}" Margin="0,300,0,218" Content="Мои экзамены" />-->
+                    <!-- Таблица -->
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBox TextWrapping="Wrap" Text="{Binding students}" Background="LightGray" Margin="10,33,10,0"/>
+                        
+                       
+                            
+                    </Grid>
+
+                    <!-- Нижняя панель -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+                        Grid.Column="1"
+                        Command="{Binding TeacherUpdateGradesCommand}"
+                        Content="Отправить заявку" 
+                        Background="White" 
+                        BorderBrush="White" 
+                        Foreground="#FF623ED0" 
+                        FontSize="12" 
+                        Padding="10,5"
+                        Height="30" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!--Для админов-->
+        <Label Content="Заполните форму запроса "  HorizontalAlignment="Center" Margin="0,194,0,0" VerticalAlignment="Top" Width="180" Height="27" Foreground="WhiteSmoke"/>
+        <Label Content="для добавления аккаунта "  HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="22" Foreground="WhiteSmoke" Margin="0,208,0,0"/>
 
         <Button Command="{Binding ExitUserCommand}" Margin="0,483,0,35" Content="Выход из учётной записи" />
     </Grid>

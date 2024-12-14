@@ -3,9 +3,6 @@ using System.Windows.Input;
 using System.Windows;
 using FourthTask.ViewModels.Commands;
 using FourthTask.PageNavigation.Ioc;
-using System.IO;
-using System.Net.Mail;
-using System;
 using System.Text.RegularExpressions;
 
 namespace FourthTask.ViewModels

@@ -14,6 +14,7 @@ namespace FourthTask
             InitializeComponent();
 
             Ioc.InitTeacherPages(_mainStudentPageFrame);
+            Ioc.TeacherNavigationService?.NavigateToTeacherGroupsPage();
         }
     }
 }
